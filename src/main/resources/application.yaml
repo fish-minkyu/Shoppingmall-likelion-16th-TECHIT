@@ -15,4 +15,4 @@ spring:
   # 서비스 단계가 아닌 개발 단계이므로 이렇게 했다.
   jwt:
     # 영문 기준 32글자 이상되어야 함
-    secret: customConfigakdjfidfkemldmakldfjkejikdfmakmclkxmclmhsakfh
+    secret: IamBackendDeveloperIcanDoJavaAndJavascrpit
