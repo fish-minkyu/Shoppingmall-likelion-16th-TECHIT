@@ -27,7 +27,10 @@ public class WebSecurityConfig {
     http
       .csrf(AbstractHttpConfigurer::disable)
       .authorizeHttpRequests(auth -> auth
-        .requestMatchers("/auth/register")
+        .requestMatchers(
+          "/user/register",
+          "/auth/login"
+        )
         .permitAll()
       )
       .sessionManagement(session -> session
