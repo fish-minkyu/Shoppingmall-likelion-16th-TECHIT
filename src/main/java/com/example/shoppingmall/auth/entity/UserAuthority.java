@@ -1,6 +1,7 @@
 package com.example.shoppingmall.auth.entity;
 
 import lombok.Getter;
+import lombok.Setter;
 
 
 @Getter
@@ -15,5 +16,4 @@ public enum UserAuthority {
   UserAuthority(String authority) {
     this.authority = authority;
   }
-
 }

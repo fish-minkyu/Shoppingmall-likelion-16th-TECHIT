@@ -9,26 +9,24 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
 
+@Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class CustomUserDetails implements UserDetails {
-  @Getter
   private Long id;
 
-  @Getter
   private String userId;
   private String password;
+
   private String username;
   private String nickname;
-  @Getter
   private String email;
   private String ageRange;
   private String phone;
   private String profile;
-  @Getter
-  private UserAuthority authority;
 
+  private UserAuthority authority;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -46,7 +44,16 @@ public class CustomUserDetails implements UserDetails {
     return this.username;
   }
 
-
+  // 해당 필드 중 하나라도 null이면, false를 반환
+  public boolean isvalid() {
+    return
+          username != null &&
+          nickname != null &&
+          email != null &&
+          ageRange != null &&
+          phone != null &&
+          profile != null;
+  }
 
 
 
