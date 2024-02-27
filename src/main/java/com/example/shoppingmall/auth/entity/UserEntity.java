@@ -34,4 +34,15 @@ public class UserEntity {
   @Enumerated(EnumType.STRING)
   @Setter
   private UserAuthority authority;
+
+  // 해당 필드 중 하나라도 null이면, false를 반환
+  public boolean isvalid() {
+    return
+      username != null &&
+        nickname != null &&
+        email != null &&
+        ageRange != null &&
+        phone != null &&
+        profile != null;
+  }
 }

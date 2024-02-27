@@ -30,7 +30,7 @@ public class UserController {
     service.createUser(CustomUserDetails.builder()
         .userId(dto.getUserId())
         .password(dto.getPassword())
-        .authority(UserAuthority.HUMAN)
+        .authority(UserAuthority.INACTIVE)
         .build()
     );
 

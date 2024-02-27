@@ -9,6 +9,7 @@ import com.example.shoppingmall.auth.jwt.JwtResponseDto;
 import com.example.shoppingmall.auth.jwt.JwtTokenUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -66,15 +67,14 @@ public class JpaUserDetailsManager implements UserDetailsService {
     }
   }
 
-  public UserDto updateUser(CustomUserDetails user) {
-    String userId = user.getUserId();
+  public UserDto updateUser(
+    CustomUserDetails user
+  ) throws UsernameNotFoundException {
 
-    Optional<UserEntity> optionalUser = userRepository.findByUserId(userId);
+    // UserEntity 불러오기
+    UserEntity targetEntity = getUserEntity();
 
-    if (optionalUser.isEmpty())
-      throw new UsernameNotFoundException(userId);
-
-    UserEntity targetEntity = optionalUser.get();
+    // 수정하기
     targetEntity.setUsername(user.getUsername());
     targetEntity.setNickname(user.getNickname());
     targetEntity.setEmail(user.getEmail());
@@ -82,6 +82,12 @@ public class JpaUserDetailsManager implements UserDetailsService {
     targetEntity.setPhone(user.getPhone());
     targetEntity.setProfile(user.getProfile());
 
+    // UserEntity 다 채웠으면 USER로 변경
+    if (targetEntity.isvalid()) {
+      targetEntity.setAuthority(UserAuthority.COMMON);
+    }
+
+    // 수정사항 저장
     return UserDto.fromEntity(userRepository.save(targetEntity));
   }
 
@@ -129,7 +135,16 @@ public class JpaUserDetailsManager implements UserDetailsService {
       .ageRange(user.getAgeRange())
       .phone(user.getPhone())
       .profile(user.getProfile())
+      .authority(user.getAuthority())
       .build();
+  }
+
+  public UserEntity getUserEntity() {
+    CustomUserDetails customUserDetails
+      = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+      return userRepository.findByUserId(customUserDetails.getUserId())
+      .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
   }
 
   public boolean userExists(String userId) {

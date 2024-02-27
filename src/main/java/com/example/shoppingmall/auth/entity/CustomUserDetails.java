@@ -44,16 +44,7 @@ public class CustomUserDetails implements UserDetails {
     return this.username;
   }
 
-  // 해당 필드 중 하나라도 null이면, false를 반환
-  public boolean isvalid() {
-    return
-          username != null &&
-          nickname != null &&
-          email != null &&
-          ageRange != null &&
-          phone != null &&
-          profile != null;
-  }
+
 
 
 

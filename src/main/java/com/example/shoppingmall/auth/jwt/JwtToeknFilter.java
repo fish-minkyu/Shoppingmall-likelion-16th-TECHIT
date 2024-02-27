@@ -50,6 +50,7 @@ public class JwtToeknFilter extends OncePerRequestFilter {
         // getAuthorities 메소드의 결과에 따라서 사용자 권한을 확인
         CustomUserDetails customUserDetails = manager.loadUserByUserId(userId);
         log.info("authority: {}", customUserDetails.getAuthority());
+        log.info("userId: {}", customUserDetails.getUserId());
 
         // 인증 정보 생성
         AbstractAuthenticationToken authentication =
