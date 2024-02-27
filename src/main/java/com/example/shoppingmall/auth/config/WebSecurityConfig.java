@@ -30,6 +30,11 @@ public class WebSecurityConfig {
           "/auth/login"
         )
         .permitAll()
+
+        .requestMatchers(
+          "/user/profile"
+        )
+        .authenticated()
       )
       .sessionManagement(session -> session
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

@@ -1,6 +1,7 @@
 package com.example.shoppingmall.auth.dto;
 
 import com.example.shoppingmall.auth.entity.UserAuthority;
+import com.example.shoppingmall.auth.entity.UserEntity;
 import lombok.*;
 
 @Getter
@@ -12,7 +13,6 @@ public class UserDto {
   private Long id;
   private String userId;
   private String password;
-  private String checkPassword;
   private String username;
   private String nickname;
   private String email;
@@ -20,4 +20,19 @@ public class UserDto {
   private String phone;
   private String profile;
   private UserAuthority authority;
+
+  public static UserDto fromEntity(UserEntity entity) {
+    return new UserDto(
+      entity.getId(),
+      entity.getUserId(),
+      entity.getPassword(),
+      entity.getUsername(),
+      entity.getNickname(),
+      entity.getEmail(),
+      entity.getAgeRange(),
+      entity.getPhone(),
+      entity.getProfile(),
+      entity.getAuthority()
+    );
+  }
 }

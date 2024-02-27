@@ -1,5 +1,6 @@
 package com.example.shoppingmall.auth;
 
+import com.example.shoppingmall.auth.dto.UserDto;
 import com.example.shoppingmall.auth.entity.CustomUserDetails;
 import com.example.shoppingmall.auth.entity.UserAuthority;
 import com.example.shoppingmall.auth.entity.UserEntity;
@@ -14,6 +15,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.Optional;
 
 
 @Slf4j
@@ -53,25 +56,33 @@ public class JpaUserDetailsManager implements UserDetailsService {
       UserEntity newUser = UserEntity.builder()
         .userId(user.getUserId())
         .password(passwordEncoder.encode(user.getPassword()))
-        .username(user.getUsername())
-        .nickname(user.getNickname())
-        .email(user.getEmail())
-        .ageRange(user.getAgeRange())
-        .phone(user.getPhone())
-        .profile(user.getProfile())
+        .authority(user.getAuthority())
         .build();
-
-      if (user.isvalid()) {
-        newUser.setAuthority(UserAuthority.HUMAN);
-      } else {
-        newUser.setAuthority(UserAuthority.USER);
-      }
 
       userRepository.save(newUser);
     } catch (Exception e) {
       log.error("Failed Exception: {}", Exception.class);
       throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
     }
+  }
+
+  public UserDto updateUser(CustomUserDetails user) {
+    String userId = user.getUserId();
+
+    Optional<UserEntity> optionalUser = userRepository.findByUserId(userId);
+
+    if (optionalUser.isEmpty())
+      throw new UsernameNotFoundException(userId);
+
+    UserEntity targetEntity = optionalUser.get();
+    targetEntity.setUsername(user.getUsername());
+    targetEntity.setNickname(user.getNickname());
+    targetEntity.setEmail(user.getEmail());
+    targetEntity.setAgeRange(user.getAgeRange());
+    targetEntity.setPhone(user.getPhone());
+    targetEntity.setProfile(user.getProfile());
+
+    return UserDto.fromEntity(userRepository.save(targetEntity));
   }
 
   // login user - JWT 토큰 발행
@@ -101,7 +112,12 @@ public class JpaUserDetailsManager implements UserDetailsService {
   public CustomUserDetails loadUserByUserId(
     String userId
   ) throws UsernameNotFoundException {
-    UserEntity user = userRepository.findByUserId(userId);
+    Optional<UserEntity> optionalUser = userRepository.findByUserId(userId);
+
+    if (optionalUser.isEmpty())
+      throw new UsernameNotFoundException(userId);
+
+    UserEntity user = optionalUser.get();
 
     return CustomUserDetails.builder()
       .id(user.getId())
