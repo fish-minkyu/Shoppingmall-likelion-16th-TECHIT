@@ -1,5 +1,6 @@
 package com.example.shoppingmall.auth;
 
+import com.example.shoppingmall.auth.dto.BusinessApplicationDto;
 import com.example.shoppingmall.auth.dto.UserDto;
 import com.example.shoppingmall.auth.entity.CustomUserDetails;
 import com.example.shoppingmall.auth.entity.UserAuthority;
@@ -36,15 +37,15 @@ public class JpaUserDetailsManager implements UserDetailsService {
     this.passwordEncoder = passwordEncoder;
     this.jwtTokenUtils = jwtTokenUtils;
 
-    // 관리자 계정 생성
-    createUser(CustomUserDetails.builder()
-      .userId("admin")
-      .password(passwordEncoder.encode("admin"))
-      .authority(UserAuthority.ADMIN)
-      .build()
-    );
-
-    log.info("user authority: {}", UserAuthority.ADMIN);
+    if (!userExists("admin")) {
+      // 관리자 계정 생성
+      createUser(CustomUserDetails.builder()
+        .userId("admin")
+        .password(passwordEncoder.encode("admin"))
+        .authority(UserAuthority.ADMIN)
+        .build()
+      );
+    }
   }
 
   // signup user
@@ -70,7 +71,6 @@ public class JpaUserDetailsManager implements UserDetailsService {
   public UserDto updateUser(
     CustomUserDetails user
   ) throws UsernameNotFoundException {
-
     // UserEntity 불러오기
     UserEntity targetEntity = getUserEntity();
 
@@ -89,6 +89,16 @@ public class JpaUserDetailsManager implements UserDetailsService {
 
     // 수정사항 저장
     return UserDto.fromEntity(userRepository.save(targetEntity));
+  }
+
+  public String businessApply(BusinessApplicationDto dto) {
+    UserEntity targetEntity = getUserEntity();
+
+    targetEntity.setBusinessNumber(dto.getBusinessNumber());
+    targetEntity.setAuthority(UserAuthority.PENDING);
+
+    userRepository.save(targetEntity);
+    return "Your application has been completed.";
   }
 
   // login user - JWT 토큰 발행
@@ -151,19 +161,7 @@ public class JpaUserDetailsManager implements UserDetailsService {
     return userRepository.existsByUserId(userId);
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+// -------------------------------------------------------------------------------------
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

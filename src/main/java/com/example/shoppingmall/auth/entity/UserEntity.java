@@ -5,6 +5,7 @@ import lombok.*;
 
 @Getter
 @Builder
+@ToString
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -30,6 +31,9 @@ public class UserEntity {
   private String phone;
   @Setter
   private String profile;
+
+  @Setter
+  private String businessNumber;
 
   @Enumerated(EnumType.STRING)
   @Setter

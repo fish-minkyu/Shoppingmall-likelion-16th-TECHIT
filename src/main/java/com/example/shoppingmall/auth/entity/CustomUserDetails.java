@@ -28,6 +28,8 @@ public class CustomUserDetails implements UserDetails {
 
   private UserAuthority authority;
 
+  private String businessNumber;
+
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     String role = authority.getAuthority();
@@ -44,16 +46,7 @@ public class CustomUserDetails implements UserDetails {
     return this.username;
   }
 
-
-
-
-
-
-
-
-
-
-
+// --------------------------------------------------------------------------------
 
   @Override
   public boolean isAccountNonExpired() {

@@ -1,5 +1,6 @@
 package com.example.shoppingmall.auth;
 
+import com.example.shoppingmall.auth.dto.BusinessApplicationDto;
 import com.example.shoppingmall.auth.dto.SignupDto;
 import com.example.shoppingmall.auth.dto.UserDto;
 import com.example.shoppingmall.auth.entity.CustomUserDetails;
@@ -51,5 +52,12 @@ public class UserController {
       .profile(dto.getProfile())
       .build()
     );
+  }
+
+  @PutMapping("/business")
+  public String businessApplication(
+    @RequestBody BusinessApplicationDto dto
+    ) {
+    return service.businessApply(dto);
   }
 }

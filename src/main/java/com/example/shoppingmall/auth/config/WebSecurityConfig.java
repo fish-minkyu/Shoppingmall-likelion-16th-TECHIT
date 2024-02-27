@@ -32,7 +32,8 @@ public class WebSecurityConfig {
         .permitAll()
 
         .requestMatchers(
-          "/user/profile"
+          "/user/profile",
+          "/user/business"
         )
         .authenticated()
       )
