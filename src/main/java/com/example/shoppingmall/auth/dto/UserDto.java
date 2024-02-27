@@ -1,37 +1,22 @@
-package com.example.shoppingmall.auth.entity;
+package com.example.shoppingmall.auth.dto;
 
-import jakarta.persistence.*;
+import com.example.shoppingmall.auth.entity.UserAuthority;
 import lombok.*;
 
 @Getter
 @Builder
-@Entity
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserEntity {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class UserDto {
   private Long id;
-
-  @Column(nullable = false)
   private String userId;
-  @Column(nullable = false)
   private String password;
-
-  @Setter
   private String username;
-  @Setter
   private String nickname;
-  @Setter
   private String email;
-  @Setter
   private String ageRange;
-  @Setter
   private String phone;
-  @Setter
   private String profile;
-
-  @Enumerated(EnumType.STRING)
-  @Setter
   private UserAuthority authority;
 }

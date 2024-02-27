@@ -20,27 +20,41 @@ public class JpaUserDetailsManager implements UserDetailsService {
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
 
-
   // create
   public void createUser(CustomUserDetails user) {
     if (this.userExists(user.getUserId()))
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 
     try {
-
+      //todo 수정 필요
       UserEntity newUser = UserEntity.builder()
         .userId(user.getUserId())
         .password(passwordEncoder.encode(user.getPassword()))
         .build();
-
     } catch (Exception e) {
       log.error("Failed Exception: {}", Exception.class);
       throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
-  // delete
+  // Read
+  public CustomUserDetails loadUserByUserId(
+    String userId
+  ) throws UsernameNotFoundException {
+    UserEntity user = userRepository.findByUserId(userId);
 
+    return CustomUserDetails.builder()
+      .id(user.getId())
+      .userId(user.getUserId())
+      .password(user.getPassword())
+      .username(user.getUsername())
+      .nickname(user.getNickname())
+      .email(user.getEmail())
+      .ageRange(user.getAgeRange())
+      .phone(user.getPhone())
+      .profile(user.getProfile())
+      .build();
+  }
 
 
   @Override

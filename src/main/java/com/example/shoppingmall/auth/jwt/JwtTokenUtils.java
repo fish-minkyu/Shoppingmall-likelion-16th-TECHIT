@@ -1,5 +1,6 @@
 package com.example.shoppingmall.auth.jwt;
 
+import com.example.shoppingmall.auth.entity.CustomUserDetails;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
@@ -7,7 +8,6 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
@@ -33,12 +33,12 @@ public class JwtTokenUtils {
       .build();
   }
 
-  public String generateToken(UserDetails userDetails) {
+  public String generateToken(CustomUserDetails userDetails) {
     // 호출되었을 때, epoch time을 받아오는 메서드
     Instant now = Instant.now();
 
     Claims jwtClaims = Jwts.claims()
-      .setSubject(userDetails.getUsername())
+      .setSubject(userDetails.getUserId())
       .setIssuedAt(Date.from(now))
       .setExpiration(Date.from(now.plusSeconds(60 * 60 * 24 * 7)));
 
@@ -57,5 +57,11 @@ public class JwtTokenUtils {
       log.warn("invalid jwt");
     }
     return false;
+  }
+
+  public Claims parseClaims(String token) {
+    return jwtParser
+      .parseClaimsJws(token)
+      .getBody();
   }
 }
