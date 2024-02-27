@@ -1,7 +1,8 @@
-package com.example.shoppingmall.auth;
+package com.example.shoppingmall.auth.controller;
 
 import com.example.shoppingmall.auth.jwt.JwtRequestDto;
 import com.example.shoppingmall.auth.jwt.JwtResponseDto;
+import com.example.shoppingmall.auth.service.JpaUserDetailsManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;

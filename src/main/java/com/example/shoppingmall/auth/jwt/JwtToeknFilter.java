@@ -1,6 +1,6 @@
 package com.example.shoppingmall.auth.jwt;
 
-import com.example.shoppingmall.auth.JpaUserDetailsManager;
+import com.example.shoppingmall.auth.service.JpaUserDetailsManager;
 import com.example.shoppingmall.auth.entity.CustomUserDetails;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

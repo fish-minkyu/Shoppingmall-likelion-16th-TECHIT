@@ -1,5 +1,6 @@
-package com.example.shoppingmall.auth;
+package com.example.shoppingmall.auth.service;
 
+import com.example.shoppingmall.auth.repo.UserRepository;
 import com.example.shoppingmall.auth.dto.BusinessApplicationDto;
 import com.example.shoppingmall.auth.dto.UserDto;
 import com.example.shoppingmall.auth.entity.CustomUserDetails;

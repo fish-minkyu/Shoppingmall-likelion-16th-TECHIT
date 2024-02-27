@@ -1,6 +1,7 @@
 package com.example.shoppingmall.auth.config;
 
-import com.example.shoppingmall.auth.JpaUserDetailsManager;
+import com.example.shoppingmall.auth.entity.UserAuthority;
+import com.example.shoppingmall.auth.service.JpaUserDetailsManager;
 import com.example.shoppingmall.auth.jwt.JwtToeknFilter;
 import com.example.shoppingmall.auth.jwt.JwtTokenUtils;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +37,12 @@ public class WebSecurityConfig {
           "/user/business"
         )
         .authenticated()
+
+        .requestMatchers(
+          "/admin/businessPending",
+          "/admin/judgement/{id}"
+        )
+        .hasAuthority(UserAuthority.ADMIN.getAuthority())
       )
       .sessionManagement(session -> session
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

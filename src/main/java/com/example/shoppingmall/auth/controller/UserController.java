@@ -1,10 +1,11 @@
-package com.example.shoppingmall.auth;
+package com.example.shoppingmall.auth.controller;
 
 import com.example.shoppingmall.auth.dto.BusinessApplicationDto;
 import com.example.shoppingmall.auth.dto.SignupDto;
 import com.example.shoppingmall.auth.dto.UserDto;
 import com.example.shoppingmall.auth.entity.CustomUserDetails;
 import com.example.shoppingmall.auth.entity.UserAuthority;
+import com.example.shoppingmall.auth.service.JpaUserDetailsManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
