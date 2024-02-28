@@ -2,9 +2,11 @@ package com.example.shoppingmall.auth.dto;
 
 import com.example.shoppingmall.auth.entity.UserAuthority;
 import jakarta.persistence.Column;
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@Builder
 public class SignupDto {
   private Long id;
 

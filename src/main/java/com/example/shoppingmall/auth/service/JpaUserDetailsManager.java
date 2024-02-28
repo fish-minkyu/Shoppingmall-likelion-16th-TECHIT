@@ -39,15 +39,16 @@ public class JpaUserDetailsManager implements UserDetailsService {
     this.passwordEncoder = passwordEncoder;
     this.jwtTokenUtils = jwtTokenUtils;
 
-    if (!userExists("admin")) {
+     if (!userExists("admin")) {
       // 관리자 계정 생성
-      createUser(CustomUserDetails.builder()
+      createUser(SignupDto.builder()
         .userId("admin")
-        .password(passwordEncoder.encode("admin"))
+        .password("1234")
+        .checkPassword("1234")
         .authority(UserAuthority.ADMIN)
         .build()
       );
-    }
+     }
   }
 
   // signup user
