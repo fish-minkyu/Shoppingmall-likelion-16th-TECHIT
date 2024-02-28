@@ -65,8 +65,13 @@ public class JpaUserDetailsManager implements UserDetailsService {
       UserEntity newUser = UserEntity.builder()
         .userId(dto.getUserId())
         .password(passwordEncoder.encode(dto.getPassword()))
-        .authority(dto.getAuthority())
         .build();
+
+      if (dto.getAuthority() != null) {
+        newUser.setAuthority(dto.getAuthority());
+      } else {
+        newUser.setAuthority(UserAuthority.INACTIVE);
+      }
 
       userRepository.save(newUser);
     } catch (Exception e) {
