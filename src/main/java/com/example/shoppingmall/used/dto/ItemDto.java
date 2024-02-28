@@ -1,19 +1,15 @@
-package com.example.shoppingmall.used.entity;
+package com.example.shoppingmall.used.dto;
 
 import com.example.shoppingmall.auth.entity.UserEntity;
-import jakarta.persistence.*;
-import lombok.*;
+import com.example.shoppingmall.used.entity.ItemStatus;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 @Getter
-@Builder
-@Entity
-@NoArgsConstructor
-@AllArgsConstructor
-public class ItemEntity {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+@ToString
+public class ItemDto {
   private Long id;
-
   @Setter
   private String title;
   @Setter
@@ -25,6 +21,5 @@ public class ItemEntity {
   @Setter
   private ItemStatus itemStatus;
 
-  @ManyToOne
   private UserEntity user;
 }

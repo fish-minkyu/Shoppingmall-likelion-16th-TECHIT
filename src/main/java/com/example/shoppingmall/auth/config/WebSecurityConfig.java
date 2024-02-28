@@ -45,7 +45,8 @@ public class WebSecurityConfig {
 
         .requestMatchers(
           "/user/profile",
-          "/user/business"
+          "/user/business",
+          "/item/enroll"
         )
         .authenticated()
 

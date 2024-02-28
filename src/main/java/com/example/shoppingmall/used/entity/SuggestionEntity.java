@@ -19,7 +19,7 @@ public class SuggestionEntity {
 
   private String purchaser;
   private String buyer;
-  private String suggestion;
+  private String suggestionStatus;
 
   @ManyToOne
   private ItemEntity item;
