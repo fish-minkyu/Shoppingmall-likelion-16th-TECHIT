@@ -1,5 +1,6 @@
 package com.example.shoppingmall.auth.service;
 
+import com.example.shoppingmall.auth.dto.SignupDto;
 import com.example.shoppingmall.auth.repo.UserRepository;
 import com.example.shoppingmall.auth.dto.BusinessApplicationDto;
 import com.example.shoppingmall.auth.dto.UserDto;
@@ -50,16 +51,20 @@ public class JpaUserDetailsManager implements UserDetailsService {
   }
 
   // signup user
-  public void createUser(CustomUserDetails user) {
+  public void createUser(SignupDto dto) {
+    // 비밀번호 일치여부 확인
+    if (!dto.getPassword().equals(dto.getCheckPassword()))
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+
     // 이미 존재하는 userId일 때, 에러 반환
-    if (this.userExists(user.getUserId()))
+    if (this.userExists(dto.getUserId()))
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 
     try {
       UserEntity newUser = UserEntity.builder()
-        .userId(user.getUserId())
-        .password(passwordEncoder.encode(user.getPassword()))
-        .authority(user.getAuthority())
+        .userId(dto.getUserId())
+        .password(passwordEncoder.encode(dto.getPassword()))
+        .authority(dto.getAuthority())
         .build();
 
       userRepository.save(newUser);

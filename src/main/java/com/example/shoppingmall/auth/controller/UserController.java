@@ -24,17 +24,7 @@ public class UserController {
   public String createUser(
    @RequestBody SignupDto dto
   ) {
-    // 비밀번호 & 비밀번호 체크 일치 확인
-    // => createUser는 CustomUserDetails 타입이므로 UserDto를 쓰는 컨트롤러에서 해결
-    if (!dto.getPassword().equals(dto.getCheckPassword()))
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-
-    service.createUser(CustomUserDetails.builder()
-        .userId(dto.getUserId())
-        .password(dto.getPassword())
-        .authority(UserAuthority.INACTIVE)
-        .build()
-    );
+    service.createUser(dto);
 
     return "done";
   }
