@@ -16,9 +16,9 @@ public class ItemController {
   private final ItemService itemService;
 
   @PostMapping("/enroll")
-  public void createItem(
+  public ItemDto createItem(
     @RequestBody ItemDto dto
     ) {
-    itemService.createItem(dto);
+    return itemService.createItem(dto);
   }
 }

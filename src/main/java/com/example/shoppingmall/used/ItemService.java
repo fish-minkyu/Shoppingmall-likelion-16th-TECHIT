@@ -20,7 +20,7 @@ public class ItemService {
   private final AuthenticationFacade auth;
 
   // Create
-  public void createItem(ItemDto dto) {
+  public ItemDto createItem(ItemDto dto) {
     try {
       UserEntity user = auth.getAuth();
 
@@ -35,9 +35,9 @@ public class ItemService {
         .user(user)
         .build();
 
-      itemRepository.save(newItem);
+      return ItemDto.fromEntity(itemRepository.save(newItem));
     } catch (Exception e) {
-      log.error("reason is {}", e);
+      log.error("error", e);
       log.error("Failed Exception: {}", Exception.class);
       throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
     }
