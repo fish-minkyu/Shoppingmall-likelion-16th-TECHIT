@@ -1,7 +1,12 @@
 package com.example.shoppingmall.auth.entity;
 
+import com.example.shoppingmall.used.entity.ItemEntity;
+import com.example.shoppingmall.used.entity.SuggestionEntity;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Builder
@@ -38,6 +43,12 @@ public class UserEntity {
   @Enumerated(EnumType.STRING)
   @Setter
   private UserAuthority authority;
+
+  @OneToMany(mappedBy = "user")
+  private List<ItemEntity> items = new ArrayList<>();
+
+  @OneToMany(mappedBy = "user")
+  private List<SuggestionEntity> suggestions = new ArrayList<>();
 
   // 해당 필드 중 하나라도 null이면, false를 반환
   public boolean isvalid() {

@@ -2,28 +2,27 @@ package com.example.shoppingmall.used.entity;
 
 import com.example.shoppingmall.auth.entity.UserEntity;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Builder
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class ItemEntity {
+public class SuggestionEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Setter
-  private String title;
-  @Setter
-  private String description;
-  @Setter
-  private String postImage;
-  @Setter
-  private Integer price;
-  @Setter
-  private String status;
+  private String purchaser;
+  private String buyer;
+  private String suggestion;
+
+  @ManyToOne
+  private ItemEntity item;
 
   @ManyToOne
   private UserEntity user;
