@@ -29,4 +29,9 @@ public class AdminController {
   ) {
     return adminService.judge(id, judgement);
   }
+
+  @GetMapping("/test")
+  public String test() {
+    return "success";
+  }
 }

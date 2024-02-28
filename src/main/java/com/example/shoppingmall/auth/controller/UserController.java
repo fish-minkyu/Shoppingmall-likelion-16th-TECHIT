@@ -22,6 +22,8 @@ public class UserController {
   public String createUser(
    @RequestBody SignupDto dto
   ) {
+    log.info("/user/register");
+    log.info("signupDto {}", dto);
     service.createUser(dto);
 
     return "done";
