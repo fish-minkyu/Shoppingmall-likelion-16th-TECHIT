@@ -11,4 +11,6 @@ public interface ProposalRepository extends JpaRepository<ProposalEntity, Long> 
   Integer countByBuyerIdAndItemId(Long buyerId, Long itemId);
 
   List<ProposalEntity> findAllBySellerIdAndItemId(Long sellerId, Long itemId);
+
+  ProposalEntity findByBuyerIdAndItemId(Long buyerId, Long itemId);
 }

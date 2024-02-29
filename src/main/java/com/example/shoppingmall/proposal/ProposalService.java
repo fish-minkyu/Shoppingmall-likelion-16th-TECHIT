@@ -94,8 +94,20 @@ public class ProposalService {
     return proposalDtoList;
   }
 
+  // Read - readOne: buyer가 특정 아이템의 구매제안서 보기
+  public ProposalDto readOne(Long itemId) {
+    try {
+      // buyer 정보 가져오기
+      UserEntity buyer = auth.getAuth();
 
-  // Read - readOne
+      // SELECT * FROM Proposal p WHERE p.buyer_id = buyer.getId() AND p.item_id = itemId
+      ProposalEntity targetEntity = proposalRepository.findByBuyerIdAndItemId(buyer.getId(), itemId);
+      return ProposalDto.fromEntity(targetEntity);
+    } catch (Exception e) {
+      log.error("error: {}", e);
+      throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
 
   // Update
 

@@ -34,6 +34,12 @@ public class ProposalController {
   }
 
   // Read - readOne: buyer가 특정 아이템의 구매제안서 보기
+  @GetMapping("/paper")
+  public ProposalDto readOne(
+    @PathVariable("id") Long itemId
+  ) {
+    return service.readOne(itemId);
+  }
 
 
   @GetMapping("/test")
