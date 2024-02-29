@@ -43,14 +43,14 @@ public class JwtToeknFilter extends OncePerRequestFilter {
         // 4. 유효하다면 해당 토큰을 바탕으로 사용자 정보를 SecurityContext에 등록
         SecurityContext context = SecurityContextHolder.createEmptyContext();
         // 사용자 정보 회수
-        String userId = jwtTokenUtils
+        String loginId = jwtTokenUtils
           .parseClaims(token)
           .getSubject();
 
         // getAuthorities 메소드의 결과에 따라서 사용자 권한을 확인
-        CustomUserDetails customUserDetails = manager.loadUserByUserId(userId);
+        CustomUserDetails customUserDetails = manager.loadUserByloginId(loginId);
         log.info("authority: {}", customUserDetails.getAuthority());
-        log.info("userId: {}", customUserDetails.getUserId());
+        log.info("loginId: {}", customUserDetails.getLoginId());
 
         // 인증 정보 생성
         AbstractAuthenticationToken authentication =

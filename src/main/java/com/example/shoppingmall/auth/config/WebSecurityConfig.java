@@ -56,10 +56,13 @@ public class WebSecurityConfig {
           "/item/enroll",
           "/item/{id}",
           "/{id}/modifying",
-          "/item/{id}/removing"
+          "/item/{id}/removing",
+          "item/{id}/proposal/suggestion",
+          "item/{id}/proposal/test"
         )
         .hasAnyAuthority(
           UserAuthority.COMMON.getAuthority(),
+          UserAuthority.BUSINESS.getAuthority(),
           UserAuthority.ADMIN.getAuthority()
         )
 

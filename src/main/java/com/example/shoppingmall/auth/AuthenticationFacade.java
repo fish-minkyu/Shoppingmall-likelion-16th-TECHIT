@@ -20,7 +20,7 @@ public class AuthenticationFacade {
     CustomUserDetails customUserDetails =
       (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-    return userRepository.findByUserId(customUserDetails.getUserId())
+    return userRepository.findByLoginId(customUserDetails.getLoginId())
       .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
   }
 }

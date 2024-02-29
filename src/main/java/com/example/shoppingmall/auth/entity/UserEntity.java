@@ -40,8 +40,8 @@ public class UserEntity {
   @Setter
   private String businessNumber;
 
-  @Enumerated(EnumType.STRING)
   @Setter
+  @Enumerated(EnumType.STRING)
   private UserAuthority authority;
 
   @OneToMany(mappedBy = "user")

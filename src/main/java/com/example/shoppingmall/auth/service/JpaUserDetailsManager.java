@@ -118,11 +118,11 @@ public class JpaUserDetailsManager implements UserDetailsService {
     JwtRequestDto dto
   ) {
     // 1. 사용자가 제공한 userId가 저장된 사용자인지 판단
-    if (!userExists(dto.getUserId()))
+    if (!userExists(dto.getLoginId()))
       throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
 
     CustomUserDetails customUserDetails
-      = loadUserByUserId(dto.getUserId());
+      = loadUserByloginId(dto.getLoginId());
 
     // 2. 비밀번호 대조
     if (!passwordEncoder
@@ -137,7 +137,7 @@ public class JpaUserDetailsManager implements UserDetailsService {
   }
 
   // user 정보 불러오기
-  public CustomUserDetails loadUserByUserId(
+  public CustomUserDetails loadUserByloginId(
     String loginId
   ) throws UsernameNotFoundException {
     Optional<UserEntity> optionalUser = userRepository.findByLoginId(loginId);

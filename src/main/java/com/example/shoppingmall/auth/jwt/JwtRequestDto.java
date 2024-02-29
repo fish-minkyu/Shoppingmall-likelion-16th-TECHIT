@@ -4,6 +4,6 @@ import lombok.Getter;
 
 @Getter
 public class JwtRequestDto {
-  private String userId;
+  private String loginId;
   private String password;
 }
