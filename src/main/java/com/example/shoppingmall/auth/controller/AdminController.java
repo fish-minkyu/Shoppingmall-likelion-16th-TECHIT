@@ -18,7 +18,7 @@ public class AdminController {
 
   // Read - SELECT * FROM userEntity WHERE authority = UserAuthority.PENDING
   @GetMapping("/businessPending")
-  public List<UserEntity> pending() {
+  public List<UserEntity> pending() { //todo 반환을 UserEntity가 아닌 다른 걸로 바꿔줘야 함, password가 보이면 안됨
     return adminService.pending();
   }
 
@@ -28,10 +28,5 @@ public class AdminController {
     @RequestParam("judgement") Boolean judgement
   ) {
     return adminService.judge(id, judgement);
-  }
-
-  @GetMapping("/test")
-  public String test() {
-    return "success";
   }
 }

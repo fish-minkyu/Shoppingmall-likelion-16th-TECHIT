@@ -1,7 +1,6 @@
 package com.example.shoppingmall.used;
 
 import com.example.shoppingmall.auth.AuthenticationFacade;
-import com.example.shoppingmall.auth.entity.UserAuthority;
 import com.example.shoppingmall.auth.entity.UserEntity;
 import com.example.shoppingmall.used.dto.ItemDto;
 import com.example.shoppingmall.used.entity.ItemEntity;
