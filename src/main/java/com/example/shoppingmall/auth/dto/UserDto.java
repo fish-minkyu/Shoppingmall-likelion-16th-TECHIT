@@ -11,7 +11,7 @@ import lombok.*;
 @AllArgsConstructor
 public class UserDto {
   private Long id;
-  private String userId;
+  private String loginId;
   private String password;
   private String username;
   private String nickname;
@@ -24,7 +24,7 @@ public class UserDto {
   public static UserDto fromEntity(UserEntity entity) {
     return new UserDto(
       entity.getId(),
-      entity.getUserId(),
+      entity.getLoginId(),
       entity.getPassword(),
       entity.getUsername(),
       entity.getNickname(),

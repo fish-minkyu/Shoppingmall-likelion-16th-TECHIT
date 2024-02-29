@@ -16,7 +16,7 @@ import java.util.Collections;
 public class CustomUserDetails implements UserDetails {
   private Long id;
 
-  private String userId;
+  private String loginId;
   private String password;
 
   private String username;

@@ -1,7 +1,7 @@
 package com.example.shoppingmall.auth.entity;
 
 import com.example.shoppingmall.used.entity.ItemEntity;
-import com.example.shoppingmall.used.entity.SuggestionEntity;
+import com.example.shoppingmall.proposal.entity.ProposalEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,7 +20,7 @@ public class UserEntity {
   private Long id;
 
   @Column(nullable = false)
-  private String userId;
+  private String loginId;
   @Column(nullable = false)
   private String password;
 
@@ -47,8 +47,12 @@ public class UserEntity {
   @OneToMany(mappedBy = "user")
   private List<ItemEntity> items = new ArrayList<>();
 
-  @OneToMany(mappedBy = "user")
-  private List<SuggestionEntity> suggestions = new ArrayList<>();
+  @OneToMany(mappedBy = "seller")
+  private List<ProposalEntity> sellers = new ArrayList<>();
+
+  @OneToMany(mappedBy = "buyer")
+  private List<ProposalEntity> buyers = new ArrayList<>();
+
 
   // 해당 필드 중 하나라도 null이면, false를 반환
   public boolean isvalid() {

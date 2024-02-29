@@ -55,8 +55,8 @@ public class WebSecurityConfig {
         .requestMatchers(
           "/item/enroll",
           "/item/{id}",
-          "/item/modifying/{id}",
-          "/item/removing/{id}"
+          "/{id}/modifying",
+          "/item/{id}/removing"
         )
         .hasAnyAuthority(
           UserAuthority.COMMON.getAuthority(),

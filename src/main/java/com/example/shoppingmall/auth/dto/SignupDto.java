@@ -11,7 +11,7 @@ public class SignupDto {
   private Long id;
 
   @Column(nullable = false)
-  private String userId;
+  private String loginId;
   @Column(nullable = false)
   private String password;
   @Column(nullable = false)

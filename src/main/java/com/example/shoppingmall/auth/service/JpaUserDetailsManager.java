@@ -42,7 +42,7 @@ public class JpaUserDetailsManager implements UserDetailsService {
      if (!userExists("admin")) {
       // 관리자 계정 생성
       createUser(SignupDto.builder()
-        .userId("admin")
+        .loginId("admin")
         .password("1234")
         .checkPassword("1234")
         .authority(UserAuthority.ADMIN)
@@ -58,12 +58,12 @@ public class JpaUserDetailsManager implements UserDetailsService {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 
     // 이미 존재하는 userId일 때, 에러 반환
-    if (this.userExists(dto.getUserId()))
+    if (this.userExists(dto.getLoginId()))
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 
     try {
       UserEntity newUser = UserEntity.builder()
-        .userId(dto.getUserId())
+        .loginId(dto.getLoginId())
         .password(passwordEncoder.encode(dto.getPassword()))
         .build();
 
@@ -138,18 +138,18 @@ public class JpaUserDetailsManager implements UserDetailsService {
 
   // user 정보 불러오기
   public CustomUserDetails loadUserByUserId(
-    String userId
+    String loginId
   ) throws UsernameNotFoundException {
-    Optional<UserEntity> optionalUser = userRepository.findByUserId(userId);
+    Optional<UserEntity> optionalUser = userRepository.findByLoginId(loginId);
 
     if (optionalUser.isEmpty())
-      throw new UsernameNotFoundException(userId);
+      throw new UsernameNotFoundException(loginId);
 
     UserEntity user = optionalUser.get();
 
     return CustomUserDetails.builder()
       .id(user.getId())
-      .userId(user.getUserId())
+      .loginId(user.getLoginId())
       .password(user.getPassword())
       .username(user.getUsername())
       .nickname(user.getNickname())
@@ -165,12 +165,12 @@ public class JpaUserDetailsManager implements UserDetailsService {
     CustomUserDetails customUserDetails
       = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-      return userRepository.findByUserId(customUserDetails.getUserId())
+      return userRepository.findByLoginId(customUserDetails.getLoginId())
       .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
   }
 
-  public boolean userExists(String userId) {
-    return userRepository.existsByUserId(userId);
+  public boolean userExists(String loginId) {
+    return userRepository.existsByLoginId(loginId);
   }
 
 // -------------------------------------------------------------------------------------
