@@ -15,6 +15,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -25,7 +28,7 @@ public class ProposalService {
   private final AuthenticationFacade auth;
 
   // Create
-  public void createProposal(Long itemId)
+  public ProposalDto createProposal(Long itemId)
   throws ResponseStatusException {
     try {
       // Buyer 정보 가져오기
@@ -47,7 +50,7 @@ public class ProposalService {
 
       // 이미 기존에 생성한 proposal이 있는지 확인
 
-      Integer proposalCount = proposalRepository.countByBuyerAndItem(buyer, targetItem);
+      Integer proposalCount = proposalRepository.countByBuyerIdAndItemId(buyer.getId(), targetItem.getId());
 
       if (proposalCount >= 1)
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
@@ -60,7 +63,7 @@ public class ProposalService {
         .proposalStatus(ProposalStatus.WAITING)
         .build();
 
-      proposalRepository.save(proposal);
+      return ProposalDto.fromEntity(proposalRepository.save(proposal));
     } catch (ResponseStatusException e) {
       throw e;
     } catch (Exception e) {
@@ -69,7 +72,28 @@ public class ProposalService {
     }
   }
 
-  // Read - readAll
+  // Read - readAll: seller가 특정 아이템의 전체 구매제안서 보기
+  public List<ProposalDto> readAll(Long itemId) {
+    // seller 정보 가져오기
+    UserEntity seller = auth.getAuth();
+
+    // proposalDtoList 선언
+    List<ProposalDto> proposalDtoList = new ArrayList<>();
+
+    // proposalEntityList 찾기
+    List<ProposalEntity> proposalEntityList
+      = proposalRepository.findAllBySellerIdAndItemId(seller.getId(),itemId);
+
+    // proposalEntityList -> proposalDtoList
+    for (ProposalEntity entity : proposalEntityList) {
+      proposalDtoList.add(
+        ProposalDto.fromEntity(entity)
+      );
+    }
+
+    return proposalDtoList;
+  }
+
 
   // Read - readOne
 

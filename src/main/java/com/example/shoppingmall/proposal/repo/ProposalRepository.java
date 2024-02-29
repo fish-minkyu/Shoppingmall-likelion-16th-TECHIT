@@ -5,6 +5,10 @@ import com.example.shoppingmall.proposal.entity.ProposalEntity;
 import com.example.shoppingmall.used.entity.ItemEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 public interface ProposalRepository extends JpaRepository<ProposalEntity, Long> {
-  Integer countByBuyerAndItem(UserEntity buyer, ItemEntity item);
+  Integer countByBuyerIdAndItemId(Long buyerId, Long itemId);
+
+  List<ProposalEntity> findAllBySellerIdAndItemId(Long sellerId, Long itemId);
 }

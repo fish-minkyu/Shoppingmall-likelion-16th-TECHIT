@@ -58,7 +58,7 @@ public class WebSecurityConfig {
           "/{id}/modifying",
           "/item/{id}/removing",
           "item/{id}/proposal/suggestion",
-          "item/{id}/proposal/test"
+          "item/{id}/proposal/list"
         )
         .hasAnyAuthority(
           UserAuthority.COMMON.getAuthority(),

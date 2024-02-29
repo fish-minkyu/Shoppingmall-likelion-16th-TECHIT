@@ -19,13 +19,14 @@ public class ProposalEntity {
   @Enumerated(EnumType.STRING)
   private ProposalStatus proposalStatus;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "seller_id")
   private UserEntity seller;
-  @ManyToOne
+
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "buyer_id")
   private UserEntity buyer;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   private ItemEntity item;
 }
