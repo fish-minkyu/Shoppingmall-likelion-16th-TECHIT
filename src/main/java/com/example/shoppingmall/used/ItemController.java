@@ -21,6 +21,12 @@ public class ItemController {
   }
 
   // Read
+  @GetMapping("/{id}")
+  public ItemDto readOne(
+    @PathVariable("id") Long id
+  ) {
+    return itemService.readOne(id);
+  }
 
   // Update
   @PutMapping("/modifying/{id}")

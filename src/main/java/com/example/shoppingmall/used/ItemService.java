@@ -1,6 +1,7 @@
 package com.example.shoppingmall.used;
 
 import com.example.shoppingmall.auth.AuthenticationFacade;
+import com.example.shoppingmall.auth.entity.UserAuthority;
 import com.example.shoppingmall.auth.entity.UserEntity;
 import com.example.shoppingmall.used.dto.ItemDto;
 import com.example.shoppingmall.used.entity.ItemEntity;
@@ -46,6 +47,12 @@ public class ItemService {
   }
 
   // Read
+  public ItemDto readOne(Long id) {
+    ItemEntity item = itemRepository.findById(id)
+      .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+    return ItemDto.fromEntity(item);
+  }
 
   // Update
   public ItemDto updateItem(
@@ -53,6 +60,7 @@ public class ItemService {
     ItemDto dto
   ) {
     try {
+      // 해당 id에 맞는 item 가져오기
       Optional<ItemEntity> optionalItem = itemRepository.findById(id);
 
       if (optionalItem.isEmpty())
@@ -60,6 +68,18 @@ public class ItemService {
 
       ItemEntity targetEntity = optionalItem.get();
 
+      // 수정 요청자 정보 가져오기
+      UserEntity user = auth.getAuth();
+
+      log.info("entity user id: {}", targetEntity.getUser().getId());
+      log.info("user.getId: {}", user.getId());
+
+      // 해당 수정 권한이 있는지 확인하기(등록자)
+      // todo 관리자도 수정이 가능하도록 바꾸기
+      if (!targetEntity.getUser().getId().equals(user.getId()))
+        throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+
+      // 권한 확인 후, 수정 진행
       targetEntity.setTitle(dto.getTitle());
       targetEntity.setDescription(dto.getDescription());
       targetEntity.setPostImage(dto.getPostImage());
@@ -78,6 +98,19 @@ public class ItemService {
     Long id
   ) {
     try {
+      // 해당 id에 맞는 item 가져오기
+      ItemEntity targetEntity = itemRepository.findById(id)
+        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+      // 삭제 요청자 정보 가져오기
+      UserEntity user = auth.getAuth();
+
+      // 해당 수정 권한이 있는지 확인하기(등록자)
+      // todo 관리자도 삭제가 가능하도록 바꾸기
+      if (!targetEntity.getUser().getId().equals(user.getId()))
+        throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+
+      // 권한 확인 후, 삭제 진행
       itemRepository.deleteById(id);
 
       return "done";

@@ -37,19 +37,33 @@ public class WebSecurityConfig {
       )
       .csrf(AbstractHttpConfigurer::disable)
       .authorizeHttpRequests(auth -> auth
+        // 전체 권한
         .requestMatchers(
           "/user/register",
           "/auth/login"
         )
         .permitAll()
 
+        // 인증된 사용자 권한(비활성화 계정 포함)
         .requestMatchers(
           "/user/profile",
-          "/user/business",
-          "/item/enroll"
+          "/user/business"
         )
         .authenticated()
 
+        // 일반 사용자 권한 이상
+        .requestMatchers(
+          "/item/enroll",
+          "/item/{id}",
+          "/item/modifying/{id}",
+          "/item/removing/{id}"
+        )
+        .hasAnyAuthority(
+          UserAuthority.COMMON.getAuthority(),
+          UserAuthority.ADMIN.getAuthority()
+        )
+
+        // 관리자 권한
         .requestMatchers(
           "/admin/businessPending",
           "/admin/judgement/{id}",
