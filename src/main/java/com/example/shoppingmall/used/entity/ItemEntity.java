@@ -29,7 +29,9 @@ public class ItemEntity {
   @Setter
   @Column(nullable = false)
   private Integer price;
+
   @Setter
+  @Enumerated(EnumType.STRING)
   private ItemStatus itemStatus;
 
   @ManyToOne

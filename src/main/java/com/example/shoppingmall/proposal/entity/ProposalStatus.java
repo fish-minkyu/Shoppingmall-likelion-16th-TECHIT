@@ -6,7 +6,8 @@ import lombok.Getter;
 public enum ProposalStatus {
   WAITING("대기"),
   ACCEPTED("수락"),
-  DENIED("거절");
+  DENIED("거절"),
+  CONFIRMATION("구매확정");
 
   private String proposalStatus;
 

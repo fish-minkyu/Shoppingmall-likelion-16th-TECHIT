@@ -8,6 +8,7 @@ import com.example.shoppingmall.proposal.entity.ProposalEntity;
 import com.example.shoppingmall.proposal.entity.ProposalStatus;
 import com.example.shoppingmall.proposal.repo.ProposalRepository;
 import com.example.shoppingmall.used.entity.ItemEntity;
+import com.example.shoppingmall.used.entity.ItemStatus;
 import com.example.shoppingmall.used.repo.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,19 +32,19 @@ public class ProposalService {
   public ProposalDto createProposal(Long itemId)
   throws ResponseStatusException {
     try {
-      // Buyer 정보 가져오기
+      // buyer 정보 가져오기
       UserEntity buyer = auth.getAuth();
 
-      // Item 정보 가져오기
+      // item 정보 가져오기
       ItemEntity targetItem = itemRepository.findById(itemId)
         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-      // Seller 정보 가져오기
+      // seller 정보 가져오기
       Long sellerId = targetItem.getUser().getId();
       UserEntity seller = userRepository.findById(sellerId)
         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-      // Seller != Buyer 확인
+      // seller != buyer 확인
       if (buyer.getId().equals(sellerId)) {
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
       }
@@ -109,7 +110,85 @@ public class ProposalService {
     }
   }
 
-  // Update
+  // Update - accept: seller가 구매제안을 수락 또는 거절을 하는 것이다.
+  public ProposalDto updateSeller(Long proposalId, Boolean accepted) {
+    try {
+      // seller를 가져온다.
+      UserEntity seller = auth.getAuth();
 
-  // Delete
+      // 구매제안을 가져온다.
+      ProposalEntity targetProposal = proposalRepository.findById(proposalId)
+        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+      //todo seller 정보와 구매제안의 seller를 비교한다.
+
+      // accepted에 따라 로직을 분기처리한다.
+      if (accepted) {
+        targetProposal.setProposalStatus(ProposalStatus.ACCEPTED);
+      } else {
+        targetProposal.setProposalStatus(ProposalStatus.DENIED);
+      }
+
+      return ProposalDto.fromEntity(proposalRepository.save(targetProposal));
+    } catch (Exception e) {
+      log.error("err: {}", e);
+      throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  // update - confirm: buyer가 구매확정을 확정하는 것이다.
+  public ProposalDto updateBuyer(Long itemId, Long proposalId, Boolean confirmation) {
+    try {
+      // buyer 정보 가져오기
+      UserEntity buyer = auth.getAuth();
+
+      // 구매제안을 가져온다.
+      ProposalEntity targetProposal = proposalRepository.findById(proposalId)
+        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+      //todo buyer정보와 구매제안의 buyer를 비교한다.
+
+      // 해당 아이템을 가져온다.
+      ItemEntity targetItem = itemRepository.findById(itemId)
+        .orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR));
+
+      // confirmation에 따라 로직을 분기처리한다.
+      if (confirmation) {
+        // 구매 확정
+        targetProposal.setProposalStatus(ProposalStatus.CONFIRMATION);
+        // 아이템 품절
+        targetItem.setItemStatus(ItemStatus.SOLD);
+
+        // item save
+        itemRepository.save(targetItem);
+        // proposal save
+        return ProposalDto.fromEntity(proposalRepository.save(targetProposal));
+      } else {
+       // 구매 거절
+       targetProposal.setProposalStatus(ProposalStatus.DENIED);
+        return ProposalDto.fromEntity(proposalRepository.save(targetProposal));
+      }
+    } catch (Exception e) {
+      log.error("err: {}", e);
+      throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  // Delete - buyer가 구매제안서를 취소한다
+  public String deleteBuyer(Long proposalId) {
+    // buyer 정보를 가져온다.
+    UserEntity buyer = auth.getAuth();
+
+    // 해당 구매제안서를 가져온다.
+    ProposalEntity targetProposal = proposalRepository.findById(proposalId)
+      .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+    // 요청 buyer와 구매제안서의 buyer를 비교한다.
+    if (!buyer.getId().equals(targetProposal.getBuyer().getId()))
+      throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+
+    proposalRepository.deleteById(proposalId);
+    return "done";
+  }
+
 }

@@ -17,7 +17,7 @@ import java.util.List;
 public class ProposalController {
   private final ProposalService service;
 
-  // Create
+  // Create: buyer가 seller에게 특정 아이템의 구메제안서 생성하기
   @PostMapping("/suggestion")
   public ProposalDto createProposal(
     @PathVariable("id") Long itemId
@@ -41,9 +41,39 @@ public class ProposalController {
     return service.readOne(itemId);
   }
 
+  // Update - accept: seller가 구매제안을 수락 또는 거절을 하는 것이다.
+  @PutMapping("/{proposalId}/accepted")
+  public ProposalDto test(
+    @PathVariable("proposalId") Long proposalId,
+    @RequestParam("accepted") Boolean accepted
+  ) {
+    try {
+      log.info("proposalId: {}", proposalId);
+      log.info("test: {}", accepted);
 
-  @GetMapping("/test")
-  public String test() {
-    return "success";
+      return service.updateSeller(proposalId, accepted);
+    } catch (Exception e){
+      log.error("err: {}", e);
+      throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  // update - confirmation: buyer가 구매확정을 할지 말지 결정한다.
+  @PutMapping("/{proposalId}/confirmation")
+  public ProposalDto updateBuyer(
+    @PathVariable("id") Long itemId,
+    @PathVariable("proposalId") Long proposalId,
+    @RequestParam("confirmation") Boolean confirmation
+  ) {
+    return service.updateBuyer(itemId, proposalId, confirmation);
+  }
+
+  // Delete - buyer가 구매제안서를 취소한다
+  // todo 여기서부터 다시 테스트하기 아 그리고 ddl 만들자 넘 귀찮다.
+  @DeleteMapping("/{proposalId}/canceled")
+  public String deleteBuyer(
+    @PathVariable("proposalId") Long proposalId
+  ) {
+    return service.deleteBuyer(proposalId);
   }
 }
