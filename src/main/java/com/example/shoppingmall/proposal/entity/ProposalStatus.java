@@ -1,13 +1,16 @@
-package com.example.shoppingmall.used.entity;
+package com.example.shoppingmall.proposal.entity;
 
-public enum SuggestionStatus {
+import lombok.Getter;
+
+@Getter
+public enum ProposalStatus {
   WAITING("대기"),
   ACCEPTED("수락"),
   DENIED("거절");
 
-  private String suggestionStatus;
+  private String proposalStatus;
 
-  SuggestionStatus(String suggestionStatus) {
-    this.suggestionStatus = suggestionStatus;
+  ProposalStatus(String proposalStatus) {
+    this.proposalStatus = proposalStatus;
   }
 }

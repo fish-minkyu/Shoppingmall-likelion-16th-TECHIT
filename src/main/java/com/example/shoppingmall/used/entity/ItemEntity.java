@@ -1,8 +1,12 @@
 package com.example.shoppingmall.used.entity;
 
 import com.example.shoppingmall.auth.entity.UserEntity;
+import com.example.shoppingmall.proposal.entity.ProposalEntity;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Builder
@@ -30,4 +34,7 @@ public class ItemEntity {
 
   @ManyToOne
   private UserEntity user;
+
+  @OneToMany(mappedBy = "item")
+  private List<ProposalEntity> proposals = new ArrayList<>();
 }

@@ -29,7 +29,7 @@ public class ItemController {
   }
 
   // Update
-  @PutMapping("/modifying/{id}")
+  @PutMapping("/{id}/modifying")
   public ItemDto updateItem(
     @PathVariable("id") Long id,
     @RequestBody ItemDto dto
@@ -38,7 +38,7 @@ public class ItemController {
   }
 
   // Delete
-  @DeleteMapping("/removing/{id}")
+  @DeleteMapping("/{id}/removing")
   public String deleteItem(
     @PathVariable("id") Long id
   ) {
