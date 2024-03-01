@@ -10,9 +10,9 @@ public enum ShopClassification {
   FOOD("음식"),
   JEWELRY("쥬얼리");
 
-  private String classtification;
+  private String shopClasstification;
 
-  ShopClassification(String classtification) {
-    this.classtification = classtification;
+  ShopClassification(String shopClasstification) {
+    this.shopClasstification = shopClasstification;
   }
 }
