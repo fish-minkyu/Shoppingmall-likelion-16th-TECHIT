@@ -24,9 +24,9 @@ public class AdminController {
 
   @PutMapping("/judgement/{id}")
   public UserDto judgement(
-    @PathVariable("id") Long id,
+    @PathVariable("id") Long userId,
     @RequestParam("judgement") Boolean judgement
   ) {
-    return adminService.judge(id, judgement);
+    return adminService.judge(userId, judgement);
   }
 }
