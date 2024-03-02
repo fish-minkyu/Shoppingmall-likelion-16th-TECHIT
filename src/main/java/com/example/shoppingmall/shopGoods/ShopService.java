@@ -3,6 +3,7 @@ package com.example.shoppingmall.shopGoods;
 import com.example.shoppingmall.auth.AuthenticationFacade;
 import com.example.shoppingmall.auth.entity.UserEntity;
 import com.example.shoppingmall.auth.repo.UserRepository;
+import com.example.shoppingmall.shopGoods.dto.DeleteShopDto;
 import com.example.shoppingmall.shopGoods.dto.ShopDto;
 import com.example.shoppingmall.shopGoods.entity.ShopEntity;
 import com.example.shoppingmall.shopGoods.entity.ShopStatus;
@@ -12,6 +13,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -42,7 +46,33 @@ public class ShopService {
     }
   }
 
-  // Read
+  // Read - 쇼핑몰 조회
+  public List<ShopDto> readShop(String category, String keyword) {
+    // 지역 변수 선언 - ShopEntity
+    List<ShopEntity> targetResult = new ArrayList<>();
+
+    // switch문
+    switch (category) {
+      case "empty":
+        targetResult = shopRepository.findAllWithRecentOrder();
+        break;
+      case "name":
+        targetResult = shopRepository.findAllByShopName(keyword);
+        break;
+      case "classification":
+        targetResult = shopRepository.findAllByShopClassification(keyword);
+        break;
+    }
+
+    // 지역 변수 선언 - ShopDtoList
+    List<ShopDto> shopDtoList = new ArrayList<>();
+    for (ShopEntity entity : targetResult) {
+      ShopDto dto = ShopDto.fromEntity(entity);
+      shopDtoList.add(dto);
+    }
+
+    return shopDtoList;
+  }
 
   // Update - 쇼핑몰 주인이 쇼핑몰의 이름, 소개, 분류를 수정한다.
   public ShopDto updateShop(Long shopId, ShopDto dto) {
@@ -70,5 +100,24 @@ public class ShopService {
       log.error("err: {}", e);
       throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
     }
+  }
+
+  // Delete - 쇼핑몰 폐쇄 요청
+  public String deleteShop(DeleteShopDto dto) {
+    // 요청 로그인한 유저 정보 가져오기
+    UserEntity shopOwner = auth.getAuth();
+
+    // 해당 쇼핑몰 정보 가져오기
+    ShopEntity targetShop = shopRepository.findById(dto.getId())
+      .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+    // 권한 확인하기
+    if (shopOwner.getId().equals(targetShop.getOwner()))
+      throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+
+    // 삭제
+    shopRepository.deleteById(targetShop.getId());
+
+    return "Your request is received. Please Waiting.";
   }
 }

@@ -53,16 +53,18 @@ public class WebSecurityConfig {
 
         // 일반 사용자 권한 이상
         .requestMatchers(
-          "/item/enroll",
-          "/item/{id}",
-          "/{id}/modifying",
-          "/item/{id}/removing",
-          "/item/{id}/proposal/suggestion",
-          "/item/{id}/proposal/list",
-          "/item/{id}/proposal/paper",
-          "/item/{id}/proposal/{proposalId}/accepted",
-          "/item/{id}/proposal/{proposalId}/confirmation"
-          
+          "/used/enroll",
+          "/used/{id}",
+          "/used/modifying/{id}",
+          "/used/removing/{id}",
+          "/used/{id}/proposal/suggestion",
+          "/used/{id}/proposal/list",
+          "/used/{id}/proposal/paper",
+          "/used/{id}/proposal/{proposalId}/accepted",
+          "/used/{id}/proposal/{proposalId}/confirmation",
+          "/used/{id}/proposal/{proposalId}/canceled",
+          "/used/test/{id}",
+          "/used/test"
         )
         .hasAnyAuthority(
           UserAuthority.COMMON.getAuthority(),

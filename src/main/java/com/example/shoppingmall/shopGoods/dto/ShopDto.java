@@ -15,6 +15,8 @@ public class ShopDto {
 
   private ShopClassification shopClassification;
 
+  // todo 상품 추가 시, private List<GoodsEntity> goods;도 추가
+
   public static ShopDto fromEntity(ShopEntity entity) {
     return new ShopDto(
       entity.getShopName(),

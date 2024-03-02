@@ -38,4 +38,7 @@ public class ShopEntity {
 
   @OneToMany(mappedBy = "shoppingMall")
   private List<GoodsEntity> goods = new ArrayList<>();
+
+  @OneToMany
+  private List<ItemOrderEntity> orders = new ArrayList<>();
 }
