@@ -12,7 +12,6 @@ import lombok.*;
 public class UserDto {
   private Long id;
   private String loginId;
-  private String password;
   private String username;
   private String nickname;
   private String email;
@@ -25,7 +24,6 @@ public class UserDto {
     return new UserDto(
       entity.getId(),
       entity.getLoginId(),
-      entity.getPassword(),
       entity.getUsername(),
       entity.getNickname(),
       entity.getEmail(),

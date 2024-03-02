@@ -82,7 +82,10 @@ public class WebSecurityConfig {
         .requestMatchers(
           "/admin/businessPending",
           "/admin/judgement/{userId}",
-          "/admin/test"
+          "/admin/list/application",
+          "/admin/view/application/{shopId}",
+          "/admin/list/shutdown",
+          "/admin/view/shutdown/{shopId}"
         )
         .hasAuthority(UserAuthority.ADMIN.getAuthority())
       )
