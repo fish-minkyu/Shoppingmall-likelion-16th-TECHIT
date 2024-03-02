@@ -146,7 +146,7 @@ public class ProposalService {
       ProposalEntity targetProposal = proposalRepository.findById(proposalId)
         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-      //todo buyer정보와 구매제안의 buyer를 비교한다.
+      //todo buyer 정보와 구매제안의 buyer를 비교한다.
 
       // 해당 아이템을 가져온다.
       ItemEntity targetItem = itemRepository.findById(itemId)

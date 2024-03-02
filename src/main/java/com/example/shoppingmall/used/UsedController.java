@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
-@RequestMapping("/item")
+@RequestMapping("/used")
 @RequiredArgsConstructor
 public class ItemController {
   private final ItemService itemService;
@@ -29,7 +29,7 @@ public class ItemController {
   }
 
   // Update
-  @PutMapping("/{id}/modifying")
+  @PutMapping("/modifying/{id}")
   public ItemDto updateItem(
     @PathVariable("id") Long id,
     @RequestBody ItemDto dto
@@ -38,7 +38,7 @@ public class ItemController {
   }
 
   // Delete
-  @DeleteMapping("/{id}/removing")
+  @DeleteMapping("/removing/{id}")
   public String deleteItem(
     @PathVariable("id") Long id
   ) {
