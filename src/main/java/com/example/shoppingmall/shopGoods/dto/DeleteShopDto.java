@@ -4,7 +4,5 @@ import lombok.Getter;
 
 @Getter
 public class DeleteShopDto {
-  private Long id;
-
   private String reason;
 }

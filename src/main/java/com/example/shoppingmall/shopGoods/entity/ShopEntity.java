@@ -41,4 +41,11 @@ public class ShopEntity {
 
   @OneToMany
   private List<ItemOrderEntity> orders = new ArrayList<>();
+
+  public boolean isNoNull() {
+    return
+      shopName != null &&
+      introduction != null &&
+      shopClassification != null;
+  }
 }

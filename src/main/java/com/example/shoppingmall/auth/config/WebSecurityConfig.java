@@ -63,8 +63,14 @@ public class WebSecurityConfig {
           "/used/{id}/proposal/{proposalId}/accepted",
           "/used/{id}/proposal/{proposalId}/confirmation",
           "/used/{id}/proposal/{proposalId}/canceled",
+
           "/used/test/{id}",
-          "/used/test"
+          "/used/test",
+
+          "/shop/{shopId}/modifying",
+          "/shop/list",
+          "/shop/{shopId}/shutdown"
+
         )
         .hasAnyAuthority(
           UserAuthority.COMMON.getAuthority(),
@@ -75,7 +81,7 @@ public class WebSecurityConfig {
         // 관리자 권한
         .requestMatchers(
           "/admin/businessPending",
-          "/admin/judgement/{id}",
+          "/admin/judgement/{userId}",
           "/admin/test"
         )
         .hasAuthority(UserAuthority.ADMIN.getAuthority())

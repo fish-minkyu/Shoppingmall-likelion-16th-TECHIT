@@ -17,18 +17,16 @@ public class ShopController {
   private final ShopService shopService;
 
   // Read - 쇼핑몰 조회
-  // todo 향 후, pagenation으로 리팩토링
+  // todo 향 후, Pagenation으로 리팩토링
   @GetMapping("/list")
   public List<ShopDto> readShop(
     @RequestParam(value = "category", defaultValue = "empty") String category,
-    @RequestParam("keyword") String keyword
+    @RequestParam(name = "keyword", required = false) String keyword
   ) {
     return shopService.readShop(category, keyword);
   }
 
-
-  // todo test 필요
-  // Update
+  // Update - owner: 쇼핑몰 수정
   @PutMapping("/{shopId}/modifying")
   public ShopDto updateShop(
     @PathVariable("shopId") Long shopId,
@@ -37,12 +35,12 @@ public class ShopController {
     return shopService.updateShop(shopId, dto);
   }
 
-  // todo test 필요
   // Delete - 쇼핑몰 폐쇄 요청
   @DeleteMapping("/{shopId}/shutdown")
   public String deleteShop(
+    @PathVariable("shopId") Long shopId,
     @RequestBody DeleteShopDto dto
     ) {
-    return shopService.deleteShop(dto);
+    return shopService.deleteShop(shopId, dto);
   }
 }

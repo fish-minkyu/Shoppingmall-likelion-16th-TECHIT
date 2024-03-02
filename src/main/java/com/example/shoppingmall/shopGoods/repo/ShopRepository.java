@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface ShopRepository extends JpaRepository<ShopEntity, Long> {
-  @Query("SELECT s FROM ShopEntity s JOIN FETCH s.orders o ORDER BY o.createdAt DESC")
+  @Query("SELECT s FROM ShopEntity s LEFT JOIN FETCH s.orders o ORDER BY o.createdAt DESC")
   List<ShopEntity> findAllWithRecentOrder();
 
   List<ShopEntity> findAllByShopName(String shopName);

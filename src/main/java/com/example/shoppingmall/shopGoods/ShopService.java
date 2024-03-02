@@ -25,8 +25,7 @@ public class ShopService {
   private final UserRepository userRepository;
   private final AuthenticationFacade auth;
 
-  //todo test 해봐야 함
-  // Create - 일반 사용자가 사업자 사용자로 전환될 때 준비중 상태의 쇼핑몰이 추가된다.
+  // Create - 사업자가 사업자 번호 추가 시, "준비 중" 쇼핑몰이 추가된다.
   public void createShop(Long userId) {
     try {
       // userId로 해당 사업자 신청 유저를 불러온다.
@@ -93,9 +92,13 @@ public class ShopService {
       targetShop.setIntroduction(dto.getIntroduction());
       targetShop.setShopClassification(dto.getShopClassification());
 
+      // 이름, 소개, 분류가 전부 작성이 되었는지 확인 -> true라면 APPLICATION
+      if (targetShop.isNoNull()) {
+        targetShop.setShopStatus(ShopStatus.APPLICATION);
+      }
+
       // 정보를 저장하고 ShopDto를 반환한다.
       return ShopDto.fromEntity(shopRepository.save(targetShop));
-
     } catch (Exception e) {
       log.error("err: {}", e);
       throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -103,20 +106,22 @@ public class ShopService {
   }
 
   // Delete - 쇼핑몰 폐쇄 요청
-  public String deleteShop(DeleteShopDto dto) {
+  public String deleteShop(Long shopId, DeleteShopDto dto) {
     // 요청 로그인한 유저 정보 가져오기
     UserEntity shopOwner = auth.getAuth();
 
     // 해당 쇼핑몰 정보 가져오기
-    ShopEntity targetShop = shopRepository.findById(dto.getId())
+    ShopEntity targetShop = shopRepository.findById(shopId)
       .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
     // 권한 확인하기
-    if (shopOwner.getId().equals(targetShop.getOwner()))
+    if (!shopOwner.getId().equals(targetShop.getOwner().getId()))
       throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
 
-    // 삭제
-    shopRepository.deleteById(targetShop.getId());
+    // 폐쇄 요청 저장
+    targetShop.setReason(dto.getReason());
+    targetShop.setShopStatus(ShopStatus.SHUTDOWN);
+    shopRepository.save(targetShop);
 
     return "Your request is received. Please Waiting.";
   }

@@ -95,7 +95,7 @@ public class JpaUserDetailsManager implements UserDetailsService {
     targetEntity.setProfile(user.getProfile());
 
     // UserEntity 다 채웠으면 USER로 변경
-    if (targetEntity.isvalid()) {
+    if (targetEntity.isNoNull()) {
       targetEntity.setAuthority(UserAuthority.COMMON);
     }
 

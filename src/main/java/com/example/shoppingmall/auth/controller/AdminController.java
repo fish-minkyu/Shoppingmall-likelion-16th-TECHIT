@@ -22,9 +22,9 @@ public class AdminController {
     return adminService.pending();
   }
 
-  @PutMapping("/judgement/{id}")
+  @PutMapping("/judgement/{userId}")
   public UserDto judgement(
-    @PathVariable("id") Long userId,
+    @PathVariable("userId") Long userId,
     @RequestParam("judgement") Boolean judgement
   ) {
     return adminService.judge(userId, judgement);
