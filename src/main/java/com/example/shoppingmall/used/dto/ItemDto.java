@@ -28,7 +28,6 @@ public class ItemDto {
   @Setter
   private ItemStatus itemStatus;
 
-  private Long userUniqueId;
 
   public static ItemDto fromEntity(ItemEntity entity) {
     return new ItemDto(
@@ -37,8 +36,7 @@ public class ItemDto {
       entity.getDescription(),
       entity.getPostImage(),
       entity.getPrice(),
-      entity.getItemStatus(),
-      entity.getId()
+      entity.getItemStatus()
     );
   }
 }

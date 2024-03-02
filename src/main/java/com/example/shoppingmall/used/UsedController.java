@@ -9,15 +9,15 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/used")
 @RequiredArgsConstructor
-public class ItemController {
-  private final ItemService itemService;
+public class UsedController {
+  private final UsedService usedService;
 
   // Create
   @PostMapping("/enroll")
   public ItemDto createItem(
     @RequestBody ItemDto dto
     ) {
-    return itemService.createItem(dto);
+    return usedService.createItem(dto);
   }
 
   // Read
@@ -25,7 +25,7 @@ public class ItemController {
   public ItemDto readOne(
     @PathVariable("id") Long id
   ) {
-    return itemService.readOne(id);
+    return usedService.readOne(id);
   }
 
   // Update
@@ -34,7 +34,7 @@ public class ItemController {
     @PathVariable("id") Long id,
     @RequestBody ItemDto dto
   ) {
-    return itemService.updateItem(id, dto);
+    return usedService.updateItem(id, dto);
   }
 
   // Delete
@@ -42,6 +42,6 @@ public class ItemController {
   public String deleteItem(
     @PathVariable("id") Long id
   ) {
-    return itemService.deleteItem(id);
+    return usedService.deleteItem(id);
   }
 }

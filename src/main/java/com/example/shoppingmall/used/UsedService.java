@@ -17,7 +17,7 @@ import java.util.Optional;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class ItemService {
+public class UsedService {
   private final ItemRepository itemRepository;
   private final AuthenticationFacade auth;
 
