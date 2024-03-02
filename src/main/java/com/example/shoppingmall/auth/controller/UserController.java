@@ -4,6 +4,8 @@ import com.example.shoppingmall.auth.dto.BusinessApplicationDto;
 import com.example.shoppingmall.auth.dto.SignupDto;
 import com.example.shoppingmall.auth.dto.UserDto;
 import com.example.shoppingmall.auth.entity.CustomUserDetails;
+import com.example.shoppingmall.auth.jwt.JwtRequestDto;
+import com.example.shoppingmall.auth.jwt.JwtResponseDto;
 import com.example.shoppingmall.auth.service.JpaUserDetailsManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +29,14 @@ public class UserController {
     service.createUser(dto);
 
     return "done";
+  }
+
+  // login
+  @PostMapping("/login")
+  public JwtResponseDto login(
+    @RequestBody JwtRequestDto dto
+  ) {
+    return service.issueJwt(dto);
   }
 
   // userInfo update

@@ -40,7 +40,7 @@ public class WebSecurityConfig {
         // 전체 권한
         .requestMatchers(
           "/user/register",
-          "/auth/login"
+          "/user/login"
         )
         .permitAll()
 
