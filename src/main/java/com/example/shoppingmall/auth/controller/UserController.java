@@ -9,7 +9,9 @@ import com.example.shoppingmall.auth.jwt.JwtResponseDto;
 import com.example.shoppingmall.auth.service.JpaUserDetailsManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @Slf4j
@@ -50,9 +52,16 @@ public class UserController {
       .email(dto.getEmail())
       .ageRange(dto.getAgeRange())
       .phone(dto.getPhone())
-      .profile(dto.getProfile())
       .build()
     );
+  }
+
+  // todo test 필요
+  @PutMapping("/profile/image")
+  public UserDto updateProfileImage(
+    @RequestParam("image") MultipartFile imageFile
+  ) {
+    return service.updateProfileImage(imageFile);
   }
 
   @PutMapping("/business")

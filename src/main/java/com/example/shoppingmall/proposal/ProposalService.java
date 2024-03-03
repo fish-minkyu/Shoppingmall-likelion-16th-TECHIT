@@ -50,7 +50,6 @@ public class ProposalService {
       }
 
       // 이미 기존에 생성한 proposal이 있는지 확인
-
       Integer proposalCount = proposalRepository.countByBuyerIdAndItemId(buyer.getId(), targetItem.getId());
 
       if (proposalCount >= 1)
@@ -131,7 +130,7 @@ public class ProposalService {
 
       return ProposalDto.fromEntity(proposalRepository.save(targetProposal));
     } catch (Exception e) {
-      log.error("err: {}", e);
+      log.error("err: {}", e.getMessage());
       throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }

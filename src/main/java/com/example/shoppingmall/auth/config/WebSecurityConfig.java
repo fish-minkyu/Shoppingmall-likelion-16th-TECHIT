@@ -47,7 +47,8 @@ public class WebSecurityConfig {
         // 인증된 사용자 권한(비활성화 계정 포함)
         .requestMatchers(
           "/user/profile",
-          "/user/business"
+          "/user/business",
+          "/user/profile/image"
         )
         .authenticated()
 
