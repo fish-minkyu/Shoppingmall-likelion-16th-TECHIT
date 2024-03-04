@@ -1,5 +1,7 @@
 package com.example.shoppingmall.used;
 
+import com.example.shoppingmall.ImageSort;
+import com.example.shoppingmall.MultipartFileFacade;
 import com.example.shoppingmall.auth.AuthenticationFacade;
 import com.example.shoppingmall.auth.entity.UserEntity;
 import com.example.shoppingmall.used.dto.ItemDto;
@@ -10,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
@@ -20,18 +23,23 @@ import java.util.Optional;
 public class UsedService {
   private final ItemRepository itemRepository;
   private final AuthenticationFacade auth;
+  private final MultipartFileFacade multipartFileFacade;
 
   // Create
-  public ItemDto createItem(ItemDto dto) {
+  public ItemDto createItem(ItemDto dto, MultipartFile usedImage) {
     try {
       UserEntity user = auth.getAuth();
 
       log.info("UserEntity: {}", user);
 
+      // Used 메인 이미지 생성
+      String requestPath
+        = (String) multipartFileFacade.insertImage(ImageSort.USED, usedImage);
+
       ItemEntity newItem = ItemEntity.builder()
         .title(dto.getTitle())
         .description(dto.getDescription())
-        .postImage(dto.getPostImage())
+        .postImage(requestPath)
         .price(dto.getPrice())
         .itemStatus(ItemStatus.SELLING)
         .user(user)

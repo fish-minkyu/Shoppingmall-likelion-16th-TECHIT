@@ -4,6 +4,7 @@ import com.example.shoppingmall.used.dto.ItemDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @RestController
@@ -15,9 +16,10 @@ public class UsedController {
   // Create
   @PostMapping("/enroll")
   public ItemDto createItem(
-    @RequestBody ItemDto dto
+    @RequestBody ItemDto dto,
+    @RequestParam("usedImage")MultipartFile usedImage
     ) {
-    return usedService.createItem(dto);
+    return usedService.createItem(dto, usedImage);
   }
 
   // Read
