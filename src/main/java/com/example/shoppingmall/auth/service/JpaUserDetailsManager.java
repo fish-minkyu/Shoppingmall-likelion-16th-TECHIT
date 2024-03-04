@@ -1,5 +1,7 @@
 package com.example.shoppingmall.auth.service;
 
+import com.example.shoppingmall.GlobalStatus;
+import com.example.shoppingmall.MultipartFileFacade;
 import com.example.shoppingmall.auth.dto.SignupDto;
 import com.example.shoppingmall.auth.repo.UserRepository;
 import com.example.shoppingmall.auth.dto.BusinessApplicationDto;
@@ -21,11 +23,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.Optional;
 
 
@@ -35,15 +32,18 @@ public class JpaUserDetailsManager implements UserDetailsService {
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
   private final JwtTokenUtils jwtTokenUtils;
+  private final MultipartFileFacade multipartFileFacade;
 
   public JpaUserDetailsManager(
     UserRepository userRepository,
     PasswordEncoder passwordEncoder,
-    JwtTokenUtils jwtTokenUtils
+    JwtTokenUtils jwtTokenUtils,
+    MultipartFileFacade multipartFileFacade
   ) {
     this.userRepository = userRepository;
     this.passwordEncoder = passwordEncoder;
     this.jwtTokenUtils = jwtTokenUtils;
+    this.multipartFileFacade =  multipartFileFacade;
 
      if (!userExists("admin")) {
       // 관리자 계정 생성
@@ -110,58 +110,18 @@ public class JpaUserDetailsManager implements UserDetailsService {
 
   // update - profile 이미지
   public UserDto updateProfileImage(MultipartFile imageFile) {
-    // 1. 접속 유저 정보 가져오기
-    UserEntity user = getUserEntity();
-
-    // 2. 파일을 어디에 업로드 할건지 결정
-    // media/profile/{Date.now}_profile.{확장자}
-    String profileDir = "media/profile/";
-
-    // 2-1. (없다면) 폴더를 만들어야 한다.
-    try{
-      Files.createDirectories(Path.of(profileDir));
-    } catch (IOException e) {
-      log.error("err: {}", e.getMessage());
-      throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    // 2-2. 실제 파일 이름을 경로와 확장자를 포함하여 만들기
-    // {LocalDateTime.now}_profile
-    LocalDateTime now = LocalDateTime.now();
-    String filename = String.format("%s_profile", now);
-
-    String originalFilename = imageFile.getOriginalFilename();
-    // "whale.png" -> {"whale", "png"}
-    String[] fileNameSplit = originalFilename.split("\\.");
-    // "blue.whale.png" -> {"blue", "whale", "png"}
-    String extension = fileNameSplit[fileNameSplit.length -1];
-    String profileFilename = filename + "." + extension;
-
-    String profilePath = profileDir + profileFilename;
-
-    // 3. 실제로 해당 위치에 저장
-    try {
-      // todo 파일 경로 수정
-      imageFile.transferTo(Path.of(profilePath));
-    } catch (IOException e) {
-      log.error("err: {}", e.getMessage());
-      throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    // 4. User에 해당 profileImage를 저장
-    // {serverDomain}/static/
-    String serverDomain = "localhost:8080";
-    String requestPath = String.format("%s/static/profile/%s", serverDomain, profileFilename);
-    log.info(requestPath);
-    user.setProfile(requestPath);
+    // 유저 이미지 저장 후 targetUser 반환
+    UserEntity targetUser =
+      (UserEntity) multipartFileFacade.insertImage(GlobalStatus.USER, imageFile);
 
     // 5. UserEntity 다 채웠으면 "INACTIVE" -> "COMMON"으로 변경
-    if (user.isNoNull()) {
-      user.setAuthority(UserAuthority.COMMON);
+    if (targetUser.isNoNull()
+      && targetUser.getAuthority().equals(UserAuthority.INACTIVE)) {
+      targetUser.setAuthority(UserAuthority.COMMON);
     }
 
     // 6. 저장 후 반환
-    return UserDto.fromEntity(userRepository.save(user));
+    return UserDto.fromEntity(userRepository.save(targetUser));
   }
 
   // 일반 유저 -> 사업자 신청

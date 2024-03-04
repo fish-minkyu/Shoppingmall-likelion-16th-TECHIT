@@ -56,7 +56,7 @@ public class UserController {
     );
   }
 
-  // todo test 필요
+  // 유저 프로필 이미지 업로드
   @PutMapping("/profile/image")
   public UserDto updateProfileImage(
     @RequestParam("image") MultipartFile imageFile
@@ -64,6 +64,7 @@ public class UserController {
     return service.updateProfileImage(imageFile);
   }
 
+  // 유저 사업자 계정 신청
   @PutMapping("/business")
   public String businessApplication(
     @RequestBody BusinessApplicationDto dto
