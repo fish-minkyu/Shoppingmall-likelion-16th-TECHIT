@@ -115,7 +115,7 @@ public class JpaUserDetailsManager implements UserDetailsService {
 
     // 2. 파일을 어디에 업로드 할건지 결정
     // media/profile/{Date.now}_profile.{확장자}
-    String profileDir = "media/profile";
+    String profileDir = "media/profile/";
 
     // 2-1. (없다면) 폴더를 만들어야 한다.
     try{
