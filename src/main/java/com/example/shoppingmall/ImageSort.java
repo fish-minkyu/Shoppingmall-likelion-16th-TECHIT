@@ -6,8 +6,7 @@ import lombok.Getter;
 public enum ImageSort {
   USER("user"),
   USED("used"),
-  GOODS("goods"),
-  SHOP("shop");
+  GOODS("goods");
 
   private String imageSort;
 

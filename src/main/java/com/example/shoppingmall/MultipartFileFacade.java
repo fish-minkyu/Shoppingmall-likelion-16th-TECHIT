@@ -41,12 +41,6 @@ public class MultipartFileFacade {
         // 이미지 종류들을 구분하기 위해
         format = "_item";
         break;
-      case SHOP:
-        // 파일을 어디에 업로드 할건지 결정
-        profileDir = "media/shop/";
-        // 이미지 종류들을 구분하기 위해
-        format = "_shop";
-        break;
       case GOODS:
         // 파일을 어디에 업로드 할건지 결정
         profileDir = "media/goods/";
@@ -98,9 +92,6 @@ public class MultipartFileFacade {
 
       case USED:
         return requestPath = String.format("%s/static/item/%s", serverDomain, profileFilename);
-
-      case SHOP:
-        break;
 
       case GOODS:
         return requestPath = String.format("%s/static/goods/%s", serverDomain, profileFilename);
