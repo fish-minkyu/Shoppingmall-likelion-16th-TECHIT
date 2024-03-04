@@ -19,32 +19,24 @@ public class GoodsController {
   // Create - (owner) 쇼핑몰 상품 등록
   @PostMapping("/enroll")
   public ResponseGoodsDto createGoods(
-    @RequestBody RequestGoodsDto dto,
-    @RequestParam("goodsImage") MultipartFile goodsImage
+    @ModelAttribute RequestGoodsDto dto,
+    MultipartFile goodsImage
     ) {
 
     return goodsService.createGoods(dto, goodsImage);
   }
 
   // todo test 필요
-  // Update - (owner) 상품 내용 수정
+  // Update - (owner) 상품 내용 수정 및 상품 이미지 수정
   @PutMapping("/modifying/{goodsId}")
-  public ResponseGoodsDto updateGoods(
+  public ResponseGoodsDto updateGoodsAndImage(
     @PathVariable("goodsId") Long goodsId,
-    @RequestBody RequestGoodsDto dto
+    @ModelAttribute RequestGoodsDto dto,
+    MultipartFile goodsImage
   ) {
-    return goodsService.updateGoods(goodsId, dto);
+    return updateGoodsAndImage(goodsId, dto, goodsImage);
   }
 
-  // todo test 필요
-  // Update - (owner) 상품 이미지 수정
-  @PutMapping("/image/{goodsId}")
-  public ResponseGoodsDto updateGoodsImage(
-    @PathVariable("goodsId") Long goodsId,
-    @RequestParam("goodsImage") MultipartFile goodsImage
-  ) {
-    return goodsService.updateGoodsImage(goodsId, goodsImage);
-  }
 
   // todo test 필요
   // Delete - (owner) 상품 삭제

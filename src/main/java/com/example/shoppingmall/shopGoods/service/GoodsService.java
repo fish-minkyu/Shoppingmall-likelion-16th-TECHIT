@@ -48,8 +48,10 @@ public class GoodsService {
   }
   }
 
-  // Update - (owner) 상품 내용 수정
-  public ResponseGoodsDto updateGoods(Long goodsId, RequestGoodsDto dto) {
+  // Update - (owner) 상품 내용 수정 및 상품 이미지 수정
+  public ResponseGoodsDto updateGoodsAndImage(
+    Long goodsId, RequestGoodsDto dto, MultipartFile goodsImage
+  ) {
     // 권한 확인
     shopAuth.checkShopAuthentication();
 
@@ -57,37 +59,35 @@ public class GoodsService {
     GoodsEntity targetGoods = goodsRepository.findById(goodsId)
       .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-    // 상품 내용 수정
-    targetGoods.setGoodsName(dto.getGoodsName());
-    targetGoods.setGoodsDescription(dto.getGoodsDescription());
-    targetGoods.setGoodsPrice(dto.getGoodsPrice());
-    targetGoods.setGoodsStock(dto.getGoodsStock());
+    if (goodsImage.isEmpty()) {
+      // 상품 내용 수정
+      targetGoods.setGoodsName(dto.getGoodsName());
+      targetGoods.setGoodsDescription(dto.getGoodsDescription());
+      targetGoods.setGoodsPrice(dto.getGoodsPrice());
+      targetGoods.setGoodsStock(dto.getGoodsStock());
 
-    // 반환
-    return ResponseGoodsDto.fromEntity(
-      goodsRepository.save(targetGoods)
-    );
-  }
+      // 반환
+      return ResponseGoodsDto.fromEntity(
+        goodsRepository.save(targetGoods)
+      );
+    } else {
+      // Goods 프로필 이미지 생성
+      String requestPath
+        = (String) multipartFileFacade.insertImage(ImageSort.GOODS, goodsImage);
 
-  // Update - (owner) 상품 이미지 수정
-  public ResponseGoodsDto updateGoodsImage(Long goodsId, MultipartFile goodsImage) {
-    // 권한 확인
-    shopAuth.checkShopAuthentication();
+      targetGoods.setGoodsName(dto.getGoodsName());
+      targetGoods.setGoodsDescription(dto.getGoodsDescription());
+      targetGoods.setGoodsPrice(dto.getGoodsPrice());
+      targetGoods.setGoodsStock(dto.getGoodsStock());
+      targetGoods.setGoodsImage(requestPath);
 
-    // Goods 프로필 이미지 생성
-    String requestPath
-      = (String) multipartFileFacade.insertImage(ImageSort.GOODS, goodsImage);
+      // 반환
+      return ResponseGoodsDto.fromEntity(
+        goodsRepository.save(targetGoods)
+      );
+    }
 
-    // targetGoods 찾기
-    GoodsEntity targetGoods = goodsRepository.findById(goodsId)
-      .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-    targetGoods.setGoodsImage(requestPath);
-
-    // 반환
-    return ResponseGoodsDto.fromEntity(
-      goodsRepository.save(targetGoods)
-    );
   }
 
   // Delete - (owner) 상품 삭제
