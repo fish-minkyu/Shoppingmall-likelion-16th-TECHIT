@@ -21,8 +21,6 @@ public class MultipartFileFacade {
   private final AuthenticationFacade auth;
 
   public Object insertImage(GlobalStatus globalStatus, MultipartFile image) {
-    // 1. 접속 유저 정보를 가져온다.
-    UserEntity targetUser = auth.getAuth();
 
     // 2. sort에 따라 분기처리를 해준다.
     // 이 때, sort에 따라 넣어줄 변수 설정
@@ -50,6 +48,18 @@ public class MultipartFileFacade {
       case SHOP:
         break;
       case GOODS:
+        // 파일을 어디에 업로드 할건지 결정
+        profileDir = "media/goods/";
+        // 이미지 종류들을 구분하기 위해
+        format = "_goods";
+
+        // (없다면) 폴더를 만들어야 한다.
+        try{
+          Files.createDirectories(Path.of(profileDir));
+        } catch (IOException e) {
+          log.error("err: {}", e.getMessage());
+          throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
         break;
     }
 
@@ -79,9 +89,15 @@ public class MultipartFileFacade {
 
     switch (globalStatus) {
       case USER:
+        // 접속 유저 정보를 가져온다.
+        UserEntity targetUser = auth.getAuth();
+
         requestPath = String.format("%s/static/profile/%s", serverDomain, profileFilename);
         targetUser.setProfile(requestPath);
         return targetUser;
+
+      case GOODS:
+        return requestPath = String.format("%s/static/profile/%s", serverDomain, profileFilename);
     }
 
     return "";

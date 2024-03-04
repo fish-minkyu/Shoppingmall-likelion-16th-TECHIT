@@ -1,4 +1,4 @@
-package com.example.shoppingmall.shopGoods;
+package com.example.shoppingmall.shopGoods.service;
 
 import com.example.shoppingmall.auth.AuthenticationFacade;
 import com.example.shoppingmall.auth.entity.UserEntity;

@@ -9,7 +9,7 @@ import lombok.Getter;
 @Getter
 @Builder
 @AllArgsConstructor
-// 고객용 ShopDto
+// (authenticated) 고객용 ShopDto
 public class ShopDto {
   private String shopName;
   private String introduction;

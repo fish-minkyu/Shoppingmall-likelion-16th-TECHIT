@@ -10,7 +10,7 @@ import lombok.Getter;
 @Getter
 @Builder
 @AllArgsConstructor
-// 관리용 ShopDto
+// (owner & Admin) 관리용 ShopDto
 public class ManagementShopDto {
   private String shopName;
   private String introduction;

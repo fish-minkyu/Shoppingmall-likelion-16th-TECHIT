@@ -4,7 +4,7 @@ import com.example.shoppingmall.auth.dto.UserDto;
 import com.example.shoppingmall.auth.entity.UserAuthority;
 import com.example.shoppingmall.auth.entity.UserEntity;
 import com.example.shoppingmall.auth.repo.UserRepository;
-import com.example.shoppingmall.shopGoods.ShopService;
+import com.example.shoppingmall.shopGoods.service.ShopService;
 import com.example.shoppingmall.shopGoods.dto.DecesionDto;
 import com.example.shoppingmall.shopGoods.dto.ManagementShopDto;
 import com.example.shoppingmall.shopGoods.dto.ShopDto;
@@ -14,13 +14,11 @@ import com.example.shoppingmall.shopGoods.repo.ShopRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Service
