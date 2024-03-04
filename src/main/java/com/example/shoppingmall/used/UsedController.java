@@ -1,6 +1,7 @@
 package com.example.shoppingmall.used;
 
-import com.example.shoppingmall.used.dto.ItemDto;
+import com.example.shoppingmall.used.dto.RequestItemDto;
+import com.example.shoppingmall.used.dto.ResponseItemDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -12,31 +13,31 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 public class UsedController {
   private final UsedService usedService;
-
-  // Create
+  // Create - 제목, 설명, 최소가격 or 제목, 설명, 최소가격, 대표 이미지
   @PostMapping("/enroll")
-  public ItemDto createItem(
-    @RequestBody ItemDto dto,
-    @RequestParam("usedImage")MultipartFile usedImage
+  public ResponseItemDto createItem(
+    @ModelAttribute RequestItemDto dto,
+    MultipartFile usedImage
     ) {
     return usedService.createItem(dto, usedImage);
   }
 
   // Read
   @GetMapping("/{id}")
-  public ItemDto readOne(
+  public ResponseItemDto readOne(
     @PathVariable("id") Long id
   ) {
     return usedService.readOne(id);
   }
 
-  // Update
+  // Update - 제목, 설명, 최소가격, 대표 이미지
   @PutMapping("/modifying/{id}")
-  public ItemDto updateItem(
+  public ResponseItemDto updateItem(
     @PathVariable("id") Long id,
-    @RequestBody ItemDto dto
+    @ModelAttribute RequestItemDto dto,
+    MultipartFile usedImage
   ) {
-    return usedService.updateItem(id, dto);
+    return usedService.updateItem(id, dto, usedImage);
   }
 
   // Delete

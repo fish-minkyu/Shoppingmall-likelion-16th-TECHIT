@@ -4,7 +4,8 @@ import com.example.shoppingmall.ImageSort;
 import com.example.shoppingmall.MultipartFileFacade;
 import com.example.shoppingmall.auth.AuthenticationFacade;
 import com.example.shoppingmall.auth.entity.UserEntity;
-import com.example.shoppingmall.used.dto.ItemDto;
+import com.example.shoppingmall.used.dto.RequestItemDto;
+import com.example.shoppingmall.used.dto.ResponseItemDto;
 import com.example.shoppingmall.used.entity.ItemEntity;
 import com.example.shoppingmall.used.entity.ItemStatus;
 import com.example.shoppingmall.used.repo.ItemRepository;
@@ -26,26 +27,39 @@ public class UsedService {
   private final MultipartFileFacade multipartFileFacade;
 
   // Create
-  public ItemDto createItem(ItemDto dto, MultipartFile usedImage) {
+  public ResponseItemDto createItem(RequestItemDto dto, MultipartFile usedImage) {
     try {
       UserEntity user = auth.getAuth();
 
       log.info("UserEntity: {}", user);
 
-      // Used 메인 이미지 생성
-      String requestPath
-        = (String) multipartFileFacade.insertImage(ImageSort.USED, usedImage);
+      // 대표 이미지 유무에 따른 로직 분기 처리
+      if (usedImage.isEmpty()) {
+        ItemEntity newItem = ItemEntity.builder()
+          .title(dto.getTitle())
+          .description(dto.getDescription())
+          .price(dto.getPrice())
+          .itemStatus(ItemStatus.SELLING)
+          .user(user)
+          .build();
 
-      ItemEntity newItem = ItemEntity.builder()
-        .title(dto.getTitle())
-        .description(dto.getDescription())
-        .postImage(requestPath)
-        .price(dto.getPrice())
-        .itemStatus(ItemStatus.SELLING)
-        .user(user)
-        .build();
+        return ResponseItemDto.fromEntity(itemRepository.save(newItem));
+      } else {
+        // Used 메인 이미지 생성
+        String requestPath
+          = (String) multipartFileFacade.insertImage(ImageSort.USED, usedImage);
 
-      return ItemDto.fromEntity(itemRepository.save(newItem));
+        ItemEntity newItem = ItemEntity.builder()
+          .title(dto.getTitle())
+          .description(dto.getDescription())
+          .postImage(requestPath)
+          .price(dto.getPrice())
+          .itemStatus(ItemStatus.SELLING)
+          .user(user)
+          .build();
+
+        return ResponseItemDto.fromEntity(itemRepository.save(newItem));
+      }
     } catch (Exception e) {
       log.error("error", e);
       log.error("Failed Exception: {}", Exception.class);
@@ -54,45 +68,45 @@ public class UsedService {
   }
 
   // Read
-  public ItemDto readOne(Long id) {
+  public ResponseItemDto readOne(Long id) {
     ItemEntity item = itemRepository.findById(id)
       .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-    return ItemDto.fromEntity(item);
+    return ResponseItemDto.fromEntity(item);
   }
 
-  // Update
-  public ItemDto updateItem(
+  // Update - 제목, 설명, 최소가격, 대표 이미지
+  public ResponseItemDto updateItem(
     Long id,
-    ItemDto dto
+    RequestItemDto dto,
+    MultipartFile usedImage
   ) {
     try {
-      // 해당 id에 맞는 item 가져오기
-      Optional<ItemEntity> optionalItem = itemRepository.findById(id);
+      // 1. 해당 id에 맞는 item 가져오기
+      ItemEntity targetItem = itemRepository.findById(id)
+        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-      if (optionalItem.isEmpty())
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-
-      ItemEntity targetEntity = optionalItem.get();
-
-      // 수정 요청자 정보 가져오기
+      // 2. 수정 요청자 정보 가져오기
       UserEntity user = auth.getAuth();
 
-      log.info("entity user id: {}", targetEntity.getUser().getId());
-      log.info("user.getId: {}", user.getId());
-
-      // 해당 수정 권한이 있는지 확인하기(등록자)
+      // 3. 해당 수정 권한이 있는지 확인하기(등록자)
       // todo 관리자도 수정이 가능하도록 바꾸기
-      if (!targetEntity.getUser().getId().equals(user.getId()))
+      if (!targetItem.getUser().getId().equals(user.getId()))
         throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
 
-      // 권한 확인 후, 수정 진행
-      targetEntity.setTitle(dto.getTitle());
-      targetEntity.setDescription(dto.getDescription());
-      targetEntity.setPostImage(dto.getPostImage());
-      targetEntity.setPrice(dto.getPrice());
+      // 4. 권한 확인 후, 수정 진행
 
-      return ItemDto.fromEntity(itemRepository.save(targetEntity));
+      // 4-1. 수정할 이미지 저장
+      String requestPath
+        = (String) multipartFileFacade.insertImage(ImageSort.USED, usedImage);
+
+      // 4-2. used 수정
+      targetItem.setTitle(dto.getTitle());
+      targetItem.setDescription(dto.getDescription());
+      targetItem.setPostImage(requestPath);
+      targetItem.setPrice(dto.getPrice());
+
+      return ResponseItemDto.fromEntity(itemRepository.save(targetItem));
     } catch (Exception e) {
       log.error("error", e);
       log.error("Failed Exception: {}", Exception.class);

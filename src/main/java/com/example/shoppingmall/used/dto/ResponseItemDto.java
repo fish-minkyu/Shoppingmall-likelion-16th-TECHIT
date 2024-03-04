@@ -11,7 +11,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @AllArgsConstructor
-public class ItemDto {
+public class ResponseItemDto {
   private Long id;
   @Setter
   @Column(nullable = false)
@@ -29,8 +29,8 @@ public class ItemDto {
   private ItemStatus itemStatus;
 
 
-  public static ItemDto fromEntity(ItemEntity entity) {
-    return new ItemDto(
+  public static ResponseItemDto fromEntity(ItemEntity entity) {
+    return new ResponseItemDto(
       entity.getId(),
       entity.getTitle(),
       entity.getDescription(),
