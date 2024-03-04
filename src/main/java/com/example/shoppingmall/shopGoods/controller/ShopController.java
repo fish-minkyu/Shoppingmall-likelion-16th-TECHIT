@@ -16,18 +16,7 @@ import java.util.List;
 public class ShopController {
   private final ShopService shopService;
 
-  // Read - 쇼핑몰 조회
-  // todo 향 후, Pagenation으로 리팩토링
-  // todo, test - 이름과 분류로 검색해보기
-  @GetMapping("/list")
-  public List<ShopDto> readShop(
-    @RequestParam(value = "category", defaultValue = "empty") String category,
-    @RequestParam(name = "keyword", required = false) String keyword
-  ) {
-    return shopService.readShop(category, keyword);
-  }
-
-  // Update - owner: 쇼핑몰 수정
+  // Read - 쇼핑몰 조회 + 검색
   @PutMapping("/{shopId}/modifying")
   public ShopDto updateShop(
     @PathVariable("shopId") Long shopId,

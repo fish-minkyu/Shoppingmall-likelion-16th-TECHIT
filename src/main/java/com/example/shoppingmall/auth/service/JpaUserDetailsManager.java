@@ -1,6 +1,6 @@
 package com.example.shoppingmall.auth.service;
 
-import com.example.shoppingmall.GlobalStatus;
+import com.example.shoppingmall.ImageSort;
 import com.example.shoppingmall.MultipartFileFacade;
 import com.example.shoppingmall.auth.dto.SignupDto;
 import com.example.shoppingmall.auth.repo.UserRepository;
@@ -112,7 +112,7 @@ public class JpaUserDetailsManager implements UserDetailsService {
   public UserDto updateProfileImage(MultipartFile imageFile) {
     // 유저 이미지 저장 후 targetUser 반환
     UserEntity targetUser =
-      (UserEntity) multipartFileFacade.insertImage(GlobalStatus.USER, imageFile);
+      (UserEntity) multipartFileFacade.insertImage(ImageSort.USER, imageFile);
 
     // 5. UserEntity 다 채웠으면 "INACTIVE" -> "COMMON"으로 변경
     if (targetUser.isNoNull()

@@ -1,17 +1,12 @@
 package com.example.shoppingmall.shopGoods.service;
 
-import com.example.shoppingmall.GlobalStatus;
+import com.example.shoppingmall.ImageSort;
 import com.example.shoppingmall.MultipartFileFacade;
-import com.example.shoppingmall.auth.AuthenticationFacade;
-import com.example.shoppingmall.auth.entity.UserEntity;
 import com.example.shoppingmall.shopGoods.ShopAuthenticationFacade;
 import com.example.shoppingmall.shopGoods.dto.RequestGoodsDto;
 import com.example.shoppingmall.shopGoods.dto.ResponseGoodsDto;
 import com.example.shoppingmall.shopGoods.entity.GoodsEntity;
-import com.example.shoppingmall.shopGoods.entity.ShopEntity;
-import com.example.shoppingmall.shopGoods.entity.ShopStatus;
 import com.example.shoppingmall.shopGoods.repo.GoodsRepository;
-import com.example.shoppingmall.shopGoods.repo.ShopRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -35,7 +30,7 @@ public class GoodsService {
 
     // Goods 프로필 이미지 생성
     String requestPath
-      = (String) multipartFileFacade.insertImage(GlobalStatus.GOODS, goodsImage);
+      = (String) multipartFileFacade.insertImage(ImageSort.GOODS, goodsImage);
 
     GoodsEntity newGoods = GoodsEntity.builder()
       .goodsName(dto.getGoodsName())
@@ -81,7 +76,7 @@ public class GoodsService {
 
     // Goods 프로필 이미지 생성
     String requestPath
-      = (String) multipartFileFacade.insertImage(GlobalStatus.GOODS, goodsImage);
+      = (String) multipartFileFacade.insertImage(ImageSort.GOODS, goodsImage);
 
     // targetGoods 찾기
     GoodsEntity targetGoods = goodsRepository.findById(goodsId)

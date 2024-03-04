@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 public class MultipartFileFacade {
   private final AuthenticationFacade auth;
 
-  public Object insertImage(GlobalStatus globalStatus, MultipartFile image) {
+  public Object insertImage(ImageSort imageSort, MultipartFile image) {
 
     // 2. sort에 따라 분기처리를 해준다.
     // 이 때, sort에 따라 넣어줄 변수 설정
@@ -28,7 +28,7 @@ public class MultipartFileFacade {
     // format: 파일에 들어갈 분류명
     String profileDir = "";
     String format = "";
-    switch (globalStatus) {
+    switch (imageSort) {
       case USER:
         // 파일을 어디에 업로드 할건지 결정
         profileDir = "media/profile/";
@@ -44,8 +44,10 @@ public class MultipartFileFacade {
         }
         break;
       case USED:
+
         break;
       case SHOP:
+
         break;
       case GOODS:
         // 파일을 어디에 업로드 할건지 결정
@@ -87,7 +89,7 @@ public class MultipartFileFacade {
     String serverDomain = "localhost:8080";
     String requestPath = "";
 
-    switch (globalStatus) {
+    switch (imageSort) {
       case USER:
         // 접속 유저 정보를 가져온다.
         UserEntity targetUser = auth.getAuth();
