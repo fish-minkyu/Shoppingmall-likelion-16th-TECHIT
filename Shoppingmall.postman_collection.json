@@ -1,0 +1,1507 @@
+{
+	"info": {
+		"_postman_id": "c4bc0d35-15a8-4a51-83bf-f61281614332",
+		"name": "Shoppingmall",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28378931"
+	},
+	"item": [
+		{
+			"name": "판매자",
+			"item": [
+				{
+					"name": "판매자 유저 회원가입",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyIiwiaWF0IjoxNzA2NjY1Mjk4LCJleHAiOjE3MDcyNzAwOTh9.BlZf-ywS88Xr5PbRMPO8eku6WANasozRrjt-IwQ4pIpaIc6qk39xA6QAfiAxy5mv",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"loginId\": \"seller\",\n    \"password\": \"1234\",\n    \"checkPassword\": \"1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/user/register",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "판매자 로그인",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"loginId\": \"seller\",\n    \"password\": \"1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/user/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "비활성 -> 일반 유저 정보 수정",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzZWxsZXIiLCJpYXQiOjE3MDkzNzgyNTAsImV4cCI6MTcwOTk4MzA1MH0.HHZVlJO07KHTKZlT9RspXmJymR_AODA7zDIyW94P60Iw9pA_rMGFlNWD4uBtVicX",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"seller\",\n    \"nickname\": \"seller\",\n    \"email\": \"seller@naver.com\",\n    \"ageRange\": \"old\",\n    \"phone\": \"010-1111-1111\",\n    \"profile\": \"commingSoon\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/user/profile",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "판매자 프로필 이미지 업로드",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzZWxsZXIiLCJpYXQiOjE3MDk2MDM0NDUsImV4cCI6MTcxMDIwODI0NX0.4Xp8Pxp3m_RD_v9F3DS3_2j49Xzg8Q4QizGfL9hNqvmeEkSwtkSqxBDNkNMwvgK2",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/Users/eominkyu/Documents/Images/books.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/user/profile/image",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"profile",
+								"image"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "판매자 물건 등록(이미지 포함)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzZWxsZXIiLCJpYXQiOjE3MDk2MDM0NDUsImV4cCI6MTcxMDIwODI0NX0.4Xp8Pxp3m_RD_v9F3DS3_2j49Xzg8Q4QizGfL9hNqvmeEkSwtkSqxBDNkNMwvgK2",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "10000",
+									"type": "text"
+								},
+								{
+									"key": "usedImage",
+									"type": "file",
+									"src": "/Users/eominkyu/Documents/Images/DB.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/used/enroll",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"used",
+								"enroll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "판매자 물건 등록(이미지 미포함)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzZWxsZXIiLCJpYXQiOjE3MDk2MDM0NDUsImV4cCI6MTcxMDIwODI0NX0.4Xp8Pxp3m_RD_v9F3DS3_2j49Xzg8Q4QizGfL9hNqvmeEkSwtkSqxBDNkNMwvgK2",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "10000",
+									"type": "text"
+								},
+								{
+									"key": "usedImage",
+									"type": "file",
+									"src": "/Users/eominkyu/Documents/Images/DB.png",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/used/enroll",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"used",
+								"enroll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "판매자 used 이미지 후속 추가",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzZWxsZXIiLCJpYXQiOjE3MDk2MDM0NDUsImV4cCI6MTcxMDIwODI0NX0.4Xp8Pxp3m_RD_v9F3DS3_2j49Xzg8Q4QizGfL9hNqvmeEkSwtkSqxBDNkNMwvgK2",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "test",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "description",
+									"value": "test",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "price",
+									"value": "test",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "postImage",
+									"value": "test",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "usedImage",
+									"type": "file",
+									"src": "/Users/eominkyu/Documents/Images/javaSyntax.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/used/image/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"used",
+								"image",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "판매자 readOne",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzZWxsZXIiLCJpYXQiOjE3MDkzNzgyNTAsImV4cCI6MTcwOTk4MzA1MH0.HHZVlJO07KHTKZlT9RspXmJymR_AODA7zDIyW94P60Iw9pA_rMGFlNWD4uBtVicX",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/used/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"used",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "판매자, 아이템 수정",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzZWxsZXIiLCJpYXQiOjE3MDkzNzgyNTAsImV4cCI6MTcwOTk4MzA1MH0.HHZVlJO07KHTKZlT9RspXmJymR_AODA7zDIyW94P60Iw9pA_rMGFlNWD4uBtVicX",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "update",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "update",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "5000",
+									"type": "text"
+								},
+								{
+									"key": "usedImage",
+									"type": "file",
+									"src": "/Users/eominkyu/Documents/Images/java.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/used/modifying/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"used",
+								"modifying",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "판매자 아이템 삭제",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzZWxsZXIiLCJpYXQiOjE3MDkzNzgyNTAsImV4cCI6MTcwOTk4MzA1MH0.HHZVlJO07KHTKZlT9RspXmJymR_AODA7zDIyW94P60Iw9pA_rMGFlNWD4uBtVicX",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/used/removing/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"used",
+								"removing",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "판매자 구매제안서 수락",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzZWxsZXIiLCJpYXQiOjE3MDkzNzgyNTAsImV4cCI6MTcwOTk4MzA1MH0.HHZVlJO07KHTKZlT9RspXmJymR_AODA7zDIyW94P60Iw9pA_rMGFlNWD4uBtVicX",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/used/1/proposal/1/accepted?accepted=true",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"used",
+								"1",
+								"proposal",
+								"1",
+								"accepted"
+							],
+							"query": [
+								{
+									"key": "accepted",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "구매자",
+			"item": [
+				{
+					"name": "구매자 유저 회원가입",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyIiwiaWF0IjoxNzA2NjY1Mjk4LCJleHAiOjE3MDcyNzAwOTh9.BlZf-ywS88Xr5PbRMPO8eku6WANasozRrjt-IwQ4pIpaIc6qk39xA6QAfiAxy5mv",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"loginId\": \"buyer\",\n    \"password\": \"1234\",\n    \"checkPassword\": \"1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/user/register",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "구매자 유저 로그인",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"loginId\": \"buyer\",\n    \"password\": \"1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/user/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "비활성 -> 일반 유저 정보 수정",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJidXllciIsImlhdCI6MTcwOTM4MDgxNCwiZXhwIjoxNzA5OTg1NjE0fQ.9VQsA0l85cp0RixUzX4k7ZpaRg44F_KEtJG20DnSMWdhYnhhMSYAjQuOKgPu0EPR",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"buyer\",\n    \"nickname\": \"buyer\",\n    \"email\": \"test@naver.com\",\n    \"ageRange\": \"teenage\",\n    \"phone\": \"010-1111-1111\",\n    \"profile\": \"commingSoon\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/user/profile",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "구매자 프로필 이미지 업로드",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJidXllciIsImlhdCI6MTcwOTYwNjUxOCwiZXhwIjoxNzEwMjExMzE4fQ.W_g_lUi34dKbvC73wslwahqGR6qf92Jc73uWNSQf0Avg-N3nRoKHTFDY_JPL3rvN",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/Users/eominkyu/Documents/Images/error.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/user/profile/image",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"profile",
+								"image"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "구매자 readOne",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJidXllciIsImlhdCI6MTcwOTM4MDgxNCwiZXhwIjoxNzA5OTg1NjE0fQ.9VQsA0l85cp0RixUzX4k7ZpaRg44F_KEtJG20DnSMWdhYnhhMSYAjQuOKgPu0EPR",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/used/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"used",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "구매자 구매제안서 생성",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJidXllciIsImlhdCI6MTcwOTM4MDgxNCwiZXhwIjoxNzA5OTg1NjE0fQ.9VQsA0l85cp0RixUzX4k7ZpaRg44F_KEtJG20DnSMWdhYnhhMSYAjQuOKgPu0EPR",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/used/1/proposal/suggestion",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"used",
+								"1",
+								"proposal",
+								"suggestion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "구매자가 특정 아이템의 구메제안서 보기",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJidXllciIsImlhdCI6MTcwOTM4MDgxNCwiZXhwIjoxNzA5OTg1NjE0fQ.9VQsA0l85cp0RixUzX4k7ZpaRg44F_KEtJG20DnSMWdhYnhhMSYAjQuOKgPu0EPR",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/used/1/proposal/paper",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"used",
+								"1",
+								"proposal",
+								"paper"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "구매자 구매제안서 취소",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJidXllciIsImlhdCI6MTcwOTM4MDgxNCwiZXhwIjoxNzA5OTg1NjE0fQ.9VQsA0l85cp0RixUzX4k7ZpaRg44F_KEtJG20DnSMWdhYnhhMSYAjQuOKgPu0EPR",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/used/1/proposal/1/canceled",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"used",
+								"1",
+								"proposal",
+								"1",
+								"canceled"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "구매자 구매제안서 확정",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJidXllciIsImlhdCI6MTcwOTM4MDgxNCwiZXhwIjoxNzA5OTg1NjE0fQ.9VQsA0l85cp0RixUzX4k7ZpaRg44F_KEtJG20DnSMWdhYnhhMSYAjQuOKgPu0EPR",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/used/1/proposal/1/confirmation?confirmation=true",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"used",
+								"1",
+								"proposal",
+								"1",
+								"confirmation"
+							],
+							"query": [
+								{
+									"key": "confirmation",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "사업자",
+			"item": [
+				{
+					"name": "사업자 회원가입",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyIiwiaWF0IjoxNzA2NjY1Mjk4LCJleHAiOjE3MDcyNzAwOTh9.BlZf-ywS88Xr5PbRMPO8eku6WANasozRrjt-IwQ4pIpaIc6qk39xA6QAfiAxy5mv",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"loginId\": \"owner\",\n    \"password\": \"1234\",\n    \"checkPassword\": \"1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/user/register",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "사업자 로그인",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"loginId\": \"owner\",\n    \"password\": \"1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/user/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "비활성 -> 일반 전체 정보 수정",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJvd25lciIsImlhdCI6MTcwOTM4MjgyNiwiZXhwIjoxNzA5OTg3NjI2fQ.Gh2Me3hm21aJLwaMAz52blaZ-kNcK6XmzEKnObCAwCnv5Lo0X0mPFc76qpygnGnM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"owner\",\n    \"nickname\": \"business\",\n    \"email\": \"test@naver.com\",\n    \"ageRange\": \"teenage\",\n    \"phone\": \"010-1111-1111\",\n    \"profile\": \"commingSoon\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/user/profile",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "사업자 프로필 이미지 업로드 Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJvd25lciIsImlhdCI6MTcwOTYwNjY3NiwiZXhwIjoxNzEwMjExNDc2fQ.QNU4kQn8eJ01_IOngl_m8Qo7-vzakIq03DNqSH14-ok8Hugdr6h6DiochqbCctN1",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/Users/eominkyu/Documents/Images/mac-mini.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/user/profile/image",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"profile",
+								"image"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "사업자 유저 사업자 신청",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJvd25lciIsImlhdCI6MTcwOTM4MjgyNiwiZXhwIjoxNzA5OTg3NjI2fQ.Gh2Me3hm21aJLwaMAz52blaZ-kNcK6XmzEKnObCAwCnv5Lo0X0mPFc76qpygnGnM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"businessNumber\": \"123-4567\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/user/business",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"business"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "사업자 번호 수정",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0ZXN0IiwiaWF0IjoxNzA5MDM5NDQ5LCJleHAiOjE3MDk2NDQyNDl9.hgVC-EKhhLMFIAGlvjJ7GqqlfTm45j9faJtWof1ExKk2lv3ZLcN5dhLtnIW_fBHn",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"businessNumber\": \"000-1111-1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/user/business",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"business"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "사업자 쇼핑몰 수정 => 개설 신청",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJvd25lciIsImlhdCI6MTcwOTM4MjgyNiwiZXhwIjoxNzA5OTg3NjI2fQ.Gh2Me3hm21aJLwaMAz52blaZ-kNcK6XmzEKnObCAwCnv5Lo0X0mPFc76qpygnGnM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"shopName\": \"testing\",\n    \"introduction\": \"test\",\n    \"shopClassification\": \"FASHION\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/shop/1/modifying",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"shop",
+								"1",
+								"modifying"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "사업자 쇼핑몰 폐쇄 요청",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJvd25lciIsImlhdCI6MTcwOTM4MjgyNiwiZXhwIjoxNzA5OTg3NjI2fQ.Gh2Me3hm21aJLwaMAz52blaZ-kNcK6XmzEKnObCAwCnv5Lo0X0mPFc76qpygnGnM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"reason\": \"test\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/shop/1/shutdown",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"shop",
+								"1",
+								"shutdown"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "쇼핑몰 조회(일반 사용자 공통)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzZWxsZXIiLCJpYXQiOjE3MDkzNzgyNTAsImV4cCI6MTcwOTk4MzA1MH0.HHZVlJO07KHTKZlT9RspXmJymR_AODA7zDIyW94P60Iw9pA_rMGFlNWD4uBtVicX",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "category",
+								"value": "",
+								"type": "text"
+							},
+							{
+								"key": "keyword",
+								"value": "test",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/shop/list",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"shop",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "사업자 상품 등록",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "goodsName",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "goodsDescription",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "goodsPrice",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "goodsStock",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "goodsImage",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/goods/enroll",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"goods",
+								"enroll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "사업자 쇼핑몰 상품 수정",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJvd25lciIsImlhdCI6MTcwOTYwNjY3NiwiZXhwIjoxNzEwMjExNDc2fQ.QNU4kQn8eJ01_IOngl_m8Qo7-vzakIq03DNqSH14-ok8Hugdr6h6DiochqbCctN1",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "goodsName",
+									"value": "update",
+									"type": "text"
+								},
+								{
+									"key": "goodsDescription",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "goodsPrice",
+									"value": "1000",
+									"type": "text"
+								},
+								{
+									"key": "goodsStock",
+									"value": "100",
+									"type": "text"
+								},
+								{
+									"key": "goodsImage",
+									"type": "file",
+									"src": "/Users/eominkyu/Documents/Images/DB.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/goods/modifying/3",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"goods",
+								"modifying",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "사업자 상품 삭제",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJvd25lciIsImlhdCI6MTcwOTYwNjY3NiwiZXhwIjoxNzEwMjExNDc2fQ.QNU4kQn8eJ01_IOngl_m8Qo7-vzakIq03DNqSH14-ok8Hugdr6h6DiochqbCctN1",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/goods/removing/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"goods",
+								"removing",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "관리자",
+			"item": [
+				{
+					"name": "관리자 로그인",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"loginId\": \"admin\",\n    \"password\": \"1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/user/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "관리자 사업자 신청 수락여부",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcwOTM4Mjk4OCwiZXhwIjoxNzA5OTg3Nzg4fQ.pM0H37_3tJLIPNDLJuHpi4pkmgtV_zNpTn_KYz_H0hIxAUNF1fSEs7CauvcxJKB-",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/admin/judgement/4?judgement=true",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"judgement",
+								"4"
+							],
+							"query": [
+								{
+									"key": "judgement",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "관리자 사업자 신청 대기자들 보기",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcwOTE3Mzg3MSwiZXhwIjoxNzA5Nzc4NjcxfQ.i21h0fMD-Dsa29DyqxhFi2vmBNOaKfjhg9IuyD9PYYNc4seuaTGNhpimTBiAuaFv",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/admin/businessPending",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"businessPending"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "관리자 \"개설 신청\"한 쇼핑몰 목록 보기",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcwOTM4Mjk4OCwiZXhwIjoxNzA5OTg3Nzg4fQ.pM0H37_3tJLIPNDLJuHpi4pkmgtV_zNpTn_KYz_H0hIxAUNF1fSEs7CauvcxJKB-",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/admin/list/application",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"list",
+								"application"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "관리자 쇼핑몰 \"개설 신청\" 허가 or 거절",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcwOTM4Mjk4OCwiZXhwIjoxNzA5OTg3Nzg4fQ.pM0H37_3tJLIPNDLJuHpi4pkmgtV_zNpTn_KYz_H0hIxAUNF1fSEs7CauvcxJKB-",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"approval\": \"true\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/admin/approval/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"approval",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "관리자 - 사업자가 신청한 폐쇄 요청 리스트 확인하기",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcwOTM4Mjk4OCwiZXhwIjoxNzA5OTg3Nzg4fQ.pM0H37_3tJLIPNDLJuHpi4pkmgtV_zNpTn_KYz_H0hIxAUNF1fSEs7CauvcxJKB-",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/admin/list/shutdown",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"list",
+								"shutdown"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "관리자 쇼핑몰 폐쇄 요청 수락",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcwOTM4Mjk4OCwiZXhwIjoxNzA5OTg3Nzg4fQ.pM0H37_3tJLIPNDLJuHpi4pkmgtV_zNpTn_KYz_H0hIxAUNF1fSEs7CauvcxJKB-",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/admin/accept/shutdown/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"accept",
+								"shutdown",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
