@@ -31,13 +31,22 @@ public class UsedController {
   }
 
   // Update - 제목, 설명, 최소가격, 대표 이미지
-  @PutMapping("/modifying/{id}")
+  @PutMapping("/modifying/{usedId}")
   public ResponseItemDto updateItem(
-    @PathVariable("id") Long id,
+    @PathVariable("usedId") Long usedId,
     @ModelAttribute RequestItemDto dto,
     MultipartFile usedImage
   ) {
-    return usedService.updateItem(id, dto, usedImage);
+    return usedService.updateItem(usedId, dto, usedImage);
+  }
+
+  // Update - 이미지 추가하기
+  @PutMapping("/image/{usedId}")
+  public ResponseItemDto updateImage(
+    @PathVariable("usedId") Long usedId,
+    MultipartFile usedImage
+  ) {
+    return usedService.updateImage(usedId, usedImage);
   }
 
   // Delete

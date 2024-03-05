@@ -19,30 +19,25 @@ import java.util.List;
 public class GoodsController {
   private final GoodsService goodsService;
 
-  // todo test 필요
   // Create - (owner) 쇼핑몰 상품 등록
   @PostMapping("/enroll")
   public ResponseGoodsDto createGoods(
     @ModelAttribute RequestGoodsDto dto,
-    MultipartFile goodsImage
+    @RequestParam("goodsImage") MultipartFile goodsImage
     ) {
-
     return goodsService.createGoods(dto, goodsImage);
   }
 
-  // todo test 필요
   // Update - (owner) 상품 내용 수정 및 상품 이미지 수정
   @PutMapping("/modifying/{goodsId}")
   public ResponseGoodsDto updateGoodsAndImage(
     @PathVariable("goodsId") Long goodsId,
     @ModelAttribute RequestGoodsDto dto,
-    MultipartFile goodsImage
+    @RequestParam("goodsImage") MultipartFile goodsImage
   ) {
-    return updateGoodsAndImage(goodsId, dto, goodsImage);
+    return goodsService.updateGoodsAndImage(goodsId, dto, goodsImage);
   }
 
-
-  // todo test 필요
   // Delete - (owner) 상품 삭제
   @DeleteMapping("/removing/{goodsId}")
   public String deleteGoods(
@@ -51,7 +46,7 @@ public class GoodsController {
     return goodsService.deleteGoods(goodsId);
   }
 
-  // todo test 필요
+  // todo 못하겠음
   // Search - 쇼핑몰 상품 검색: 이름 & 가격 범위를 기준으로 상품 검색
   @GetMapping("/search/{shopId}")
   public List<SearchResponseGoodsDto> searchGoodsOfShop(

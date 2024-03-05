@@ -8,6 +8,7 @@ import com.example.shoppingmall.shopGoods.dto.ResponseGoodsDto;
 import com.example.shoppingmall.shopGoods.dto.SearchDto;
 import com.example.shoppingmall.shopGoods.dto.SearchResponseGoodsDto;
 import com.example.shoppingmall.shopGoods.entity.GoodsEntity;
+import com.example.shoppingmall.shopGoods.entity.ShopEntity;
 import com.example.shoppingmall.shopGoods.repo.GoodsRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,8 +31,8 @@ public class GoodsService {
   // Create - (owner) 쇼핑몰 상품 등록
   public ResponseGoodsDto createGoods(RequestGoodsDto dto, MultipartFile goodsImage) {
   try {
-    // 권한 확인
-    shopAuth.checkShopAuthentication();
+    // 권한 확인 및 쇼핑몰 정보 가져오기
+    ShopEntity targetShop = shopAuth.checkShopAuthentication();
 
     // Goods 프로필 이미지 생성
     String requestPath
@@ -43,6 +44,7 @@ public class GoodsService {
       .goodsPrice(dto.getGoodsPrice())
       .goodsStock(dto.getGoodsStock())
       .goodsImage(requestPath)
+      .shoppingMall(targetShop)
       .build();
 
     // 저장 및 반환
@@ -57,14 +59,13 @@ public class GoodsService {
   public ResponseGoodsDto updateGoodsAndImage(
     Long goodsId, RequestGoodsDto dto, MultipartFile goodsImage
   ) {
-    // 권한 확인
-    shopAuth.checkShopAuthentication();
+// 권한 확인 및 쇼핑몰 정보 가져오기
+    ShopEntity targetShop = shopAuth.checkShopAuthentication();
 
     // targetGoods 찾기
-    GoodsEntity targetGoods = goodsRepository.findById(goodsId)
-      .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    GoodsEntity targetGoods = goodsRepository.findByShoppingMall_IdAndId(targetShop.getId(), goodsId);
 
-    if (goodsImage.isEmpty()) {
+    if (goodsImage == null) {
       // 상품 내용 수정
       targetGoods.setGoodsName(dto.getGoodsName());
       targetGoods.setGoodsDescription(dto.getGoodsDescription());

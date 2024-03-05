@@ -21,7 +21,7 @@ public class ResponseItemDto {
   private String description;
   @Setter
   @Column(nullable = false)
-  private String postImage;
+  private String usedImage;
   @Setter
   @Column(nullable = false)
   private Integer price;
@@ -34,7 +34,7 @@ public class ResponseItemDto {
       entity.getId(),
       entity.getTitle(),
       entity.getDescription(),
-      entity.getPostImage(),
+      entity.getUsedImage(),
       entity.getPrice(),
       entity.getItemStatus()
     );

@@ -15,7 +15,7 @@ public class RequestItemDto {
   @Column(nullable = false)
   private String description;
   @Setter
-//  @Column(nullable = false)
+  @Column(nullable = false)
   private Integer price;
   @Setter
   private ItemStatus itemStatus;

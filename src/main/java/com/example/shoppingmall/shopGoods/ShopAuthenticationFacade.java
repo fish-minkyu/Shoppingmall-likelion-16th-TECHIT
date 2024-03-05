@@ -18,10 +18,10 @@ public class ShopAuthenticationFacade {
   private final AuthenticationFacade auth;
   private final ShopRepository shopRepository;
 
-  public void checkShopAuthentication() {
+  public ShopEntity checkShopAuthentication() {
     // 쇼핑몰 정보 가져오기
     UserEntity owner = auth.getAuth();
-    ShopEntity targetShop = shopRepository.findByOwnerId(owner.getId())
+    ShopEntity targetShop = shopRepository.findByOwner_Id(owner.getId())
       .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
     log.info("targetShop: {}", targetShop);
@@ -29,5 +29,7 @@ public class ShopAuthenticationFacade {
     // 쇼핑몰 상품 등록 가능한지 확인 - "허가" 상태일 때만 상품 생성
     if (!targetShop.getShopStatus().equals(ShopStatus.PERMISSION))
       throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+
+    return targetShop;
   }
 }

@@ -16,8 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Optional;
-
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -31,10 +29,8 @@ public class UsedService {
     try {
       UserEntity user = auth.getAuth();
 
-      log.info("UserEntity: {}", user);
-
       // 대표 이미지 유무에 따른 로직 분기 처리
-      if (usedImage.isEmpty()) {
+      if (usedImage == null) {
         ItemEntity newItem = ItemEntity.builder()
           .title(dto.getTitle())
           .description(dto.getDescription())
@@ -52,7 +48,7 @@ public class UsedService {
         ItemEntity newItem = ItemEntity.builder()
           .title(dto.getTitle())
           .description(dto.getDescription())
-          .postImage(requestPath)
+          .usedImage(requestPath)
           .price(dto.getPrice())
           .itemStatus(ItemStatus.SELLING)
           .user(user)
@@ -77,13 +73,13 @@ public class UsedService {
 
   // Update - 제목, 설명, 최소가격, 대표 이미지
   public ResponseItemDto updateItem(
-    Long id,
+    Long usedId,
     RequestItemDto dto,
     MultipartFile usedImage
   ) {
     try {
       // 1. 해당 id에 맞는 item 가져오기
-      ItemEntity targetItem = itemRepository.findById(id)
+      ItemEntity targetItem = itemRepository.findById(usedId)
         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
       // 2. 수정 요청자 정보 가져오기
@@ -103,7 +99,7 @@ public class UsedService {
       // 4-2. used 수정
       targetItem.setTitle(dto.getTitle());
       targetItem.setDescription(dto.getDescription());
-      targetItem.setPostImage(requestPath);
+      targetItem.setUsedImage(requestPath);
       targetItem.setPrice(dto.getPrice());
 
       return ResponseItemDto.fromEntity(itemRepository.save(targetItem));
@@ -112,6 +108,29 @@ public class UsedService {
       log.error("Failed Exception: {}", Exception.class);
       throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
     }
+  }
+
+  // Update - 이미지 추가
+  public ResponseItemDto updateImage(Long usedId, MultipartFile usedImage) {
+    // 접속 유저 정보 가져오기
+    UserEntity user = auth.getAuth();
+
+    // 해당 아이템 가져오기
+    ItemEntity targetUsed = itemRepository.findById(usedId)
+      .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+    // 권한 확인하기
+    if (!targetUsed.getUser().getId().equals(user.getId()))
+      throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+
+    // 이미지 수정
+    String requestPath
+      = (String) multipartFileFacade.insertImage(ImageSort.USED, usedImage);
+
+    targetUsed.setUsedImage(requestPath);
+
+    // 저장 및 반환
+    return ResponseItemDto.fromEntity(itemRepository.save(targetUsed));
   }
 
   // Delete

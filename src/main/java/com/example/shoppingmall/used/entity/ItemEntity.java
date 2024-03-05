@@ -25,7 +25,7 @@ public class ItemEntity {
   @Column(nullable = false)
   private String description;
   @Setter
-  private String postImage;
+  private String usedImage;
   @Setter
   @Column(nullable = false)
   private Integer price;

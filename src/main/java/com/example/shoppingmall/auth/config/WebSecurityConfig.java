@@ -80,6 +80,15 @@ public class WebSecurityConfig {
           UserAuthority.ADMIN.getAuthority()
         )
 
+        // 사업자(owner) 권한
+        .requestMatchers(
+          "/goods/enroll",
+          "/goods/modifying/{goodsId}",
+          "/goods/removing/{goodsId}",
+          "/goods/search/{shopId}"
+        )
+        .hasAuthority(UserAuthority.BUSINESS.getAuthority())
+
         // 관리자 권한
         .requestMatchers(
           "/admin/businessPending",
