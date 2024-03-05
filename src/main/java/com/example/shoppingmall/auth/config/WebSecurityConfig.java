@@ -55,9 +55,10 @@ public class WebSecurityConfig {
         // 일반 사용자 권한 이상
         .requestMatchers(
           "/used/enroll",
-          "/used/{id}",
-          "/used/modifying/{id}",
+          "/used/{usedId}",
+          "/used/modifying/{usedId}",
           "/used/removing/{id}",
+          "/used/image/{usedId}",
           "/used/{id}/proposal/suggestion",
           "/used/{id}/proposal/list",
           "/used/{id}/proposal/paper",
@@ -86,7 +87,10 @@ public class WebSecurityConfig {
           "/admin/list/application",
           "/admin/view/application/{shopId}",
           "/admin/list/shutdown",
-          "/admin/view/shutdown/{shopId}"
+          "/admin/view/shutdown/{shopId}",
+          "/admin/approval/{shopId}",
+          "/admin/list/shutdown",
+          "/admin/accept/shutdown/{shopId}"
         )
         .hasAuthority(UserAuthority.ADMIN.getAuthority())
       )

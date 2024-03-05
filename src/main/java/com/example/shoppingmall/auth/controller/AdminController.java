@@ -60,23 +60,12 @@ public class AdminController {
     return adminService.approvalOrRefuse(shopId, dto);
   }
 
-  // todo test
   // Read - 사업자가 신청한 폐쇄 요청 리스트 확인하기
   @GetMapping("/list/shutdown")
   public List<ManagementShopDto> readShutdownList() {
     return adminService.readShutdownList();
   }
 
-  // todo test
-  // Read - 사업자가 신청한 폐쇄 요청 하나 확인하기
-  @GetMapping("/view/shutdown/{shopId}")
-  public ManagementShopDto readShutdownOne(
-    @PathVariable("shopId") Long shopId
-  ) {
-    return adminService.readShutdownOne(shopId);
-  }
-
-  // todo test
   // Update - 폐쇄 요청 수락
   @PutMapping("/accept/shutdown/{shopId}")
   public ManagementShopDto acceptShutdown(
