@@ -5,6 +5,8 @@ import com.example.shoppingmall.MultipartFileFacade;
 import com.example.shoppingmall.shopGoods.ShopAuthenticationFacade;
 import com.example.shoppingmall.shopGoods.dto.RequestGoodsDto;
 import com.example.shoppingmall.shopGoods.dto.ResponseGoodsDto;
+import com.example.shoppingmall.shopGoods.dto.SearchDto;
+import com.example.shoppingmall.shopGoods.dto.SearchResponseGoodsDto;
 import com.example.shoppingmall.shopGoods.entity.GoodsEntity;
 import com.example.shoppingmall.shopGoods.repo.GoodsRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +15,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -86,8 +91,6 @@ public class GoodsService {
         goodsRepository.save(targetGoods)
       );
     }
-
-
   }
 
   // Delete - (owner) 상품 삭제
@@ -101,5 +104,27 @@ public class GoodsService {
     return "done";
   }
 
-  // Search - 쇼핑몰 상품 검색, 이름 & 가격 범위를 기준으로 상품 검색
+  // Search - 쇼핑몰 상품 검색: 이름 & 가격 범위를 기준으로 상품 검색
+  public List<SearchResponseGoodsDto> searchGoodsOfShop(Long shopId, String category, SearchDto dto) {
+    List<SearchResponseGoodsDto> goodsDtos = new ArrayList<>();
+    List<GoodsEntity> goodsEntities = new ArrayList<>();
+
+    switch (category) {
+      case "goodsName":
+        goodsEntities = goodsRepository
+          .findAllByShoppingMall_IdAndGoodsNameContaining(shopId, dto.getKeyword());
+        break;
+
+      case "goodsPrice":
+        goodsEntities = goodsRepository
+          .findAllByShoppingMall_IdAndGoodsPriceBetween(shopId, dto.getPriceFloor(), dto.getPriceCeil());
+        break;
+    }
+
+    for (GoodsEntity entity : goodsEntities) {
+      goodsDtos.add(SearchResponseGoodsDto.fromEntity(entity));
+    }
+
+    return goodsDtos;
+  }
 }

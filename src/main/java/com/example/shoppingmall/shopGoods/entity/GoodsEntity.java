@@ -29,6 +29,6 @@ public class GoodsEntity {
   @Column(nullable = false)
   private Integer goodsStock;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   private ShopEntity shoppingMall;
 }

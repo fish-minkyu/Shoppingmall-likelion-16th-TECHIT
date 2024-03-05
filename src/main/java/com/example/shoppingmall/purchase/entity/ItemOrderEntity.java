@@ -1,6 +1,7 @@
-package com.example.shoppingmall.shopGoods.entity;
+package com.example.shoppingmall.purchase.entity;
 
 import com.example.shoppingmall.auth.entity.UserEntity;
+import com.example.shoppingmall.shopGoods.entity.ShopEntity;
 import com.example.shoppingmall.used.entity.ItemEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

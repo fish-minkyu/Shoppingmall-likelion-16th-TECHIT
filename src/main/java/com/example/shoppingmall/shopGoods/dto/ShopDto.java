@@ -10,6 +10,7 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor
 // (authenticated) 고객용 ShopDto
+// "개설 신청"한 쇼핑몰 반환용 Dto - reason이 필요없어 빼줌
 public class ShopDto {
   private String shopName;
   private String introduction;

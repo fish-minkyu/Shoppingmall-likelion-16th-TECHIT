@@ -1,6 +1,7 @@
 package com.example.shoppingmall.shopGoods.entity;
 
 import com.example.shoppingmall.auth.entity.UserEntity;
+import com.example.shoppingmall.purchase.entity.ItemOrderEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
