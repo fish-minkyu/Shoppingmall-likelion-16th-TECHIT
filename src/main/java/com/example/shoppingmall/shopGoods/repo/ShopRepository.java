@@ -27,5 +27,5 @@ public interface ShopRepository extends JpaRepository<ShopEntity, Long> {
   ShopEntity findByIdAndShopStatus(Long shopId, ShopStatus shopStatus);
 
   // (owner) owner.getId()로 해당 쇼핑몰 불러오기
-  Optional<ShopEntity> findByOwner_Id(Long ownerId);
+  Optional<ShopEntity> ㅈ(Long ownerId);
 }
