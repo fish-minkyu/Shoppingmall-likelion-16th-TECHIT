@@ -121,6 +121,8 @@ public class ProposalService {
 
       //todo seller 정보와 구매제안의 seller를 비교한다.
 
+      //todo seller가 승낙하면 나머지 구매제안은 거절로 바꿔라.
+
       // accepted에 따라 로직을 분기처리한다.
       if (accepted) {
         targetProposal.setProposalStatus(ProposalStatus.ACCEPTED);

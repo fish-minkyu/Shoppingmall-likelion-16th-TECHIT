@@ -61,7 +61,6 @@ public class UserEntity {
       nickname != null &&
       email != null &&
       ageRange != null &&
-      phone != null &&
-      profile != null;
+      phone != null;
   }
 }

@@ -86,6 +86,7 @@ public class JpaUserDetailsManager implements UserDetailsService {
     }
   }
 
+  // 유저 정보 수정
   public UserDto updateUser(
     CustomUserDetails user
   ) throws UsernameNotFoundException {
@@ -99,7 +100,7 @@ public class JpaUserDetailsManager implements UserDetailsService {
     targetEntity.setAgeRange(user.getAgeRange());
     targetEntity.setPhone(user.getPhone());
 
-    // UserEntity 다 채웠으면 "INACTIVE" -> "COMMON"으로 변경
+    // 유저 정보 채워졌으면 INACTIVE -> COMMON
     if (targetEntity.isNoNull()) {
       targetEntity.setAuthority(UserAuthority.COMMON);
     }

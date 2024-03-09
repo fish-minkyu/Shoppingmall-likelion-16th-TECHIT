@@ -1,11 +1,17 @@
 # Mission2 - Shopingmall
 
-- 2024.02.22 ~ 03.05
+- 2024.02.22 ~ 03.05 `15주차` ~ `17주차`
 
 <details>
 <summary><strong>ERD</strong></summary>
 
 ![Static Files](image/ERD.png)
+</details>
+
+<details>
+<summary><strong>API 명세서</strong></summary>
+
+![Static Files]()
 </details>
 
 ---
@@ -159,7 +165,7 @@
 
 ## Index
 
-- [프로젝트 요구 사항](projectGuide.md)
+- [프로젝트 요구 사항](md/projectGuide.md)
 - [Postman](shoppingmall.postman_collection.json)
 - [Key Point]()
 - [Trouble Shooting]()
