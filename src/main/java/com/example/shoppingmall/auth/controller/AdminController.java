@@ -50,7 +50,6 @@ public class AdminController {
     return adminService.readApplicationOne(shopId);
   }
 
-  // todo test
   // Update - "개설 신청" 허가 or 거절
   @PutMapping("/approval/{shopId}")
   public ManagementShopDto approval(
