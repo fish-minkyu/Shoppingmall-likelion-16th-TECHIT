@@ -17,7 +17,7 @@ public class UsedController {
   @PostMapping("/enroll")
   public ResponseItemDto createItem(
     @ModelAttribute RequestItemDto dto,
-    MultipartFile usedImage
+    @RequestParam("usedImage") MultipartFile usedImage
     ) {
     return usedService.createItem(dto, usedImage);
   }
@@ -35,7 +35,7 @@ public class UsedController {
   public ResponseItemDto updateItem(
     @PathVariable("usedId") Long usedId,
     @ModelAttribute RequestItemDto dto,
-    MultipartFile usedImage
+    @RequestParam("usedImage") MultipartFile usedImage
   ) {
     return usedService.updateItem(usedId, dto, usedImage);
   }
