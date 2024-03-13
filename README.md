@@ -165,7 +165,7 @@
 
 ## Index
 
-- [프로젝트 요구 사항](md/projectGuide.md)
+- [프로젝트 요구 사항](md/ProjectGuide.md)
 - [Postman](shoppingmall.postman_collection.json)
 - [Key Point]()
 - [Trouble Shooting]()
