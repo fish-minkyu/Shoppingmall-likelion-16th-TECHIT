@@ -1,14 +1,14 @@
-package com.example.shoppingmall.used;
+package com.example.shoppingmall.product;
 
 import com.example.shoppingmall.ImageSort;
 import com.example.shoppingmall.MultipartFileFacade;
 import com.example.shoppingmall.auth.AuthenticationFacade;
 import com.example.shoppingmall.auth.entity.UserEntity;
-import com.example.shoppingmall.used.dto.RequestItemDto;
-import com.example.shoppingmall.used.dto.ResponseItemDto;
-import com.example.shoppingmall.used.entity.ItemEntity;
-import com.example.shoppingmall.used.entity.ItemStatus;
-import com.example.shoppingmall.used.repo.ItemRepository;
+import com.example.shoppingmall.product.dto.RequestItemDto;
+import com.example.shoppingmall.product.dto.ResponseItemDto;
+import com.example.shoppingmall.product.entity.ProductEntity;
+import com.example.shoppingmall.product.entity.ItemStatus;
+import com.example.shoppingmall.product.repo.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -19,8 +19,8 @@ import org.springframework.web.server.ResponseStatusException;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class UsedService {
-  private final ItemRepository itemRepository;
+public class ProductService {
+  private final ProductRepository productRepository;
   private final AuthenticationFacade auth;
   private final MultipartFileFacade multipartFileFacade;
 
@@ -31,7 +31,7 @@ public class UsedService {
 
       // 대표 이미지 유무에 따른 로직 분기 처리
       if (usedImage == null) {
-        ItemEntity newItem = ItemEntity.builder()
+        ProductEntity newItem = ProductEntity.builder()
           .title(dto.getTitle())
           .description(dto.getDescription())
           .price(dto.getPrice())
@@ -39,13 +39,13 @@ public class UsedService {
           .user(user)
           .build();
 
-        return ResponseItemDto.fromEntity(itemRepository.save(newItem));
+        return ResponseItemDto.fromEntity(productRepository.save(newItem));
       } else {
         // Used 메인 이미지 생성
         String requestPath
           = (String) multipartFileFacade.insertImage(ImageSort.USED, usedImage);
 
-        ItemEntity newItem = ItemEntity.builder()
+        ProductEntity newItem = ProductEntity.builder()
           .title(dto.getTitle())
           .description(dto.getDescription())
           .usedImage(requestPath)
@@ -54,7 +54,7 @@ public class UsedService {
           .user(user)
           .build();
 
-        return ResponseItemDto.fromEntity(itemRepository.save(newItem));
+        return ResponseItemDto.fromEntity(productRepository.save(newItem));
       }
     } catch (Exception e) {
       log.error("error", e);
@@ -65,7 +65,7 @@ public class UsedService {
 
   // Read
   public ResponseItemDto readOne(Long id) {
-    ItemEntity item = itemRepository.findById(id)
+    ProductEntity item = productRepository.findById(id)
       .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
     return ResponseItemDto.fromEntity(item);
@@ -79,7 +79,7 @@ public class UsedService {
   ) {
     try {
       // 1. 해당 id에 맞는 item 가져오기
-      ItemEntity targetItem = itemRepository.findById(usedId)
+      ProductEntity targetItem = productRepository.findById(usedId)
         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
       // 2. 수정 요청자 정보 가져오기
@@ -102,7 +102,7 @@ public class UsedService {
       targetItem.setUsedImage(requestPath);
       targetItem.setPrice(dto.getPrice());
 
-      return ResponseItemDto.fromEntity(itemRepository.save(targetItem));
+      return ResponseItemDto.fromEntity(productRepository.save(targetItem));
     } catch (Exception e) {
       log.error("error", e);
       log.error("Failed Exception: {}", Exception.class);
@@ -116,7 +116,7 @@ public class UsedService {
     UserEntity user = auth.getAuth();
 
     // 해당 아이템 가져오기
-    ItemEntity targetUsed = itemRepository.findById(usedId)
+    ProductEntity targetUsed = productRepository.findById(usedId)
       .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
     // 권한 확인하기
@@ -130,7 +130,7 @@ public class UsedService {
     targetUsed.setUsedImage(requestPath);
 
     // 저장 및 반환
-    return ResponseItemDto.fromEntity(itemRepository.save(targetUsed));
+    return ResponseItemDto.fromEntity(productRepository.save(targetUsed));
   }
 
   // Delete
@@ -139,7 +139,7 @@ public class UsedService {
   ) {
     try {
       // 해당 id에 맞는 item 가져오기
-      ItemEntity targetEntity = itemRepository.findById(id)
+      ProductEntity targetEntity = productRepository.findById(id)
         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
       // 삭제 요청자 정보 가져오기
@@ -151,12 +151,20 @@ public class UsedService {
         throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
 
       // 권한 확인 후, 삭제 진행
-      itemRepository.deleteById(id);
+      productRepository.deleteById(id);
 
       return "done";
     } catch (Exception e) {
       log.error("error", e);
       log.error("Failed Exception: {}", Exception.class);
+      throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  public void test() {
+    try {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+    } catch (Exception e) {
       throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }

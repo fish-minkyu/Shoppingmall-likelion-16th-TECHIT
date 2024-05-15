@@ -1,7 +1,7 @@
-package com.example.shoppingmall.used.dto;
+package com.example.shoppingmall.product.dto;
 
-import com.example.shoppingmall.used.entity.ItemEntity;
-import com.example.shoppingmall.used.entity.ItemStatus;
+import com.example.shoppingmall.product.entity.ProductEntity;
+import com.example.shoppingmall.product.entity.ItemStatus;
 import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,7 +29,7 @@ public class ResponseItemDto {
   private ItemStatus itemStatus;
 
 
-  public static ResponseItemDto fromEntity(ItemEntity entity) {
+  public static ResponseItemDto fromEntity(ProductEntity entity) {
     return new ResponseItemDto(
       entity.getId(),
       entity.getTitle(),

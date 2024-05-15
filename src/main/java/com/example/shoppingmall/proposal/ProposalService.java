@@ -3,13 +3,13 @@ package com.example.shoppingmall.proposal;
 import com.example.shoppingmall.auth.AuthenticationFacade;
 import com.example.shoppingmall.auth.entity.UserEntity;
 import com.example.shoppingmall.auth.repo.UserRepository;
+import com.example.shoppingmall.product.entity.ProductEntity;
 import com.example.shoppingmall.proposal.dto.ProposalDto;
 import com.example.shoppingmall.proposal.entity.ProposalEntity;
 import com.example.shoppingmall.proposal.entity.ProposalStatus;
 import com.example.shoppingmall.proposal.repo.ProposalRepository;
-import com.example.shoppingmall.used.entity.ItemEntity;
-import com.example.shoppingmall.used.entity.ItemStatus;
-import com.example.shoppingmall.used.repo.ItemRepository;
+import com.example.shoppingmall.product.entity.ItemStatus;
+import com.example.shoppingmall.product.repo.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -24,7 +24,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProposalService {
   private final ProposalRepository proposalRepository;
-  private final ItemRepository itemRepository;
+  private final ProductRepository productRepository;
   private final UserRepository userRepository;
   private final AuthenticationFacade auth;
 
@@ -36,7 +36,7 @@ public class ProposalService {
       UserEntity buyer = auth.getAuth();
 
       // item 정보 가져오기
-      ItemEntity targetItem = itemRepository.findById(itemId)
+      ProductEntity targetItem = productRepository.findById(itemId)
         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
       // seller 정보 가져오기
@@ -150,7 +150,7 @@ public class ProposalService {
       //todo buyer 정보와 구매제안의 buyer를 비교한다.
 
       // 해당 아이템을 가져온다.
-      ItemEntity targetItem = itemRepository.findById(itemId)
+      ProductEntity targetItem = productRepository.findById(itemId)
         .orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR));
 
       // confirmation에 따라 로직을 분기처리한다.
@@ -161,7 +161,7 @@ public class ProposalService {
         targetItem.setItemStatus(ItemStatus.SOLD);
 
         // item save
-        itemRepository.save(targetItem);
+        productRepository.save(targetItem);
         // proposal save
         return ProposalDto.fromEntity(proposalRepository.save(targetProposal));
       } else {

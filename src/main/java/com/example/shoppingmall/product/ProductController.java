@@ -1,7 +1,7 @@
-package com.example.shoppingmall.used;
+package com.example.shoppingmall.product;
 
-import com.example.shoppingmall.used.dto.RequestItemDto;
-import com.example.shoppingmall.used.dto.ResponseItemDto;
+import com.example.shoppingmall.product.dto.RequestItemDto;
+import com.example.shoppingmall.product.dto.ResponseItemDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -11,15 +11,15 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/used")
 @RequiredArgsConstructor
-public class UsedController {
-  private final UsedService usedService;
+public class ProductController {
+  private final ProductService productService;
   // Create - 제목, 설명, 최소가격 or 제목, 설명, 최소가격, 대표 이미지
   @PostMapping("/enroll")
   public ResponseItemDto createItem(
     @ModelAttribute RequestItemDto dto,
     @RequestParam("usedImage") MultipartFile usedImage
     ) {
-    return usedService.createItem(dto, usedImage);
+    return productService.createItem(dto, usedImage);
   }
 
   // Read
@@ -27,7 +27,7 @@ public class UsedController {
   public ResponseItemDto readOne(
     @PathVariable("id") Long id
   ) {
-    return usedService.readOne(id);
+    return productService.readOne(id);
   }
 
   // Update - 제목, 설명, 최소가격, 대표 이미지
@@ -37,7 +37,7 @@ public class UsedController {
     @ModelAttribute RequestItemDto dto,
     @RequestParam("usedImage") MultipartFile usedImage
   ) {
-    return usedService.updateItem(usedId, dto, usedImage);
+    return productService.updateItem(usedId, dto, usedImage);
   }
 
   // Update - 이미지 추가하기
@@ -46,7 +46,7 @@ public class UsedController {
     @PathVariable("usedId") Long usedId,
     MultipartFile usedImage
   ) {
-    return usedService.updateImage(usedId, usedImage);
+    return productService.updateImage(usedId, usedImage);
   }
 
   // Delete
@@ -54,6 +54,11 @@ public class UsedController {
   public String deleteItem(
     @PathVariable("id") Long id
   ) {
-    return usedService.deleteItem(id);
+    return productService.deleteItem(id);
+  }
+
+  @GetMapping("/test")
+  public void test() {
+    productService.test();
   }
 }

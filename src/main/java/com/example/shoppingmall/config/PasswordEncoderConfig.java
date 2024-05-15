@@ -1,4 +1,4 @@
-package com.example.shoppingmall.auth.config;
+package com.example.shoppingmall.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

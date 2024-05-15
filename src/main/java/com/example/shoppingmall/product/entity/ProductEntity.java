@@ -1,4 +1,4 @@
-package com.example.shoppingmall.used.entity;
+package com.example.shoppingmall.product.entity;
 
 import com.example.shoppingmall.auth.entity.UserEntity;
 import com.example.shoppingmall.proposal.entity.ProposalEntity;
@@ -13,7 +13,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class ItemEntity {
+public class ProductEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;

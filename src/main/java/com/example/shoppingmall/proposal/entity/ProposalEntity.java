@@ -1,7 +1,7 @@
 package com.example.shoppingmall.proposal.entity;
 
 import com.example.shoppingmall.auth.entity.UserEntity;
-import com.example.shoppingmall.used.entity.ItemEntity;
+import com.example.shoppingmall.product.entity.ProductEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,5 +28,5 @@ public class ProposalEntity {
   private UserEntity buyer;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  private ItemEntity item;
+  private ProductEntity item;
 }

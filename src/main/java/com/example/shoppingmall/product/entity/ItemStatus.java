@@ -1,7 +1,6 @@
-package com.example.shoppingmall.used.entity;
+package com.example.shoppingmall.product.entity;
 
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 public enum ItemStatus {

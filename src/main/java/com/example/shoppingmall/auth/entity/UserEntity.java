@@ -1,6 +1,6 @@
 package com.example.shoppingmall.auth.entity;
 
-import com.example.shoppingmall.used.entity.ItemEntity;
+import com.example.shoppingmall.product.entity.ProductEntity;
 import com.example.shoppingmall.proposal.entity.ProposalEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -45,7 +45,7 @@ public class UserEntity {
   private UserAuthority authority;
 
   @OneToMany(mappedBy = "user")
-  private List<ItemEntity> items = new ArrayList<>();
+  private List<ProductEntity> items = new ArrayList<>();
 
   @OneToMany(mappedBy = "seller")
   private List<ProposalEntity> sellers = new ArrayList<>();

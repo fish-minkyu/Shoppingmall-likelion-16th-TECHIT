@@ -1,6 +1,6 @@
-package com.example.shoppingmall.used.dto;
+package com.example.shoppingmall.product.dto;
 
-import com.example.shoppingmall.used.entity.ItemStatus;
+import com.example.shoppingmall.product.entity.ItemStatus;
 import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;

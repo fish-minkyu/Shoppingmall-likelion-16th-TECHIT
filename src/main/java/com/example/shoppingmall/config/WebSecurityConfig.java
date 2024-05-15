@@ -1,4 +1,4 @@
-package com.example.shoppingmall.auth.config;
+package com.example.shoppingmall.config;
 
 import com.example.shoppingmall.auth.entity.UserAuthority;
 import com.example.shoppingmall.auth.service.JpaUserDetailsManager;
@@ -7,17 +7,12 @@ import com.example.shoppingmall.auth.jwt.JwtTokenUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.intercept.AuthorizationFilter;
-import org.springframework.web.ErrorResponse;
-
-import java.io.PrintWriter;
 
 
 @Configuration
@@ -39,16 +34,15 @@ public class WebSecurityConfig {
       .authorizeHttpRequests(auth -> auth
         // 전체 권한
         .requestMatchers(
-          "/user/register",
-          "/user/login"
+            HttpMethod.POST,
+            "/users/**"
         )
         .permitAll()
 
         // 인증된 사용자 권한(비활성화 계정 포함)
         .requestMatchers(
-          "/user/profile",
-          "/user/business",
-          "/user/profile/image"
+            HttpMethod.PUT,
+            "/users/**"
         )
         .authenticated()
 
@@ -102,6 +96,9 @@ public class WebSecurityConfig {
           "/admin/accept/shutdown/{shopId}"
         )
         .hasAuthority(UserAuthority.ADMIN.getAuthority())
+
+        // 그 외 모든 경로 권한 허용
+        .anyRequest().permitAll()
       )
       .sessionManagement(session -> session
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

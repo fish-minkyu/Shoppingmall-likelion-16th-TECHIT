@@ -1,7 +1,6 @@
-# Mission2 - Shopingmall
+# Shoping Mall
 
 - 2024.02.22 ~ 03.05 `15주차` ~ `17주차`
-- 기여자: 어민규
 
 <details>
 <summary><strong>ERD</strong></summary>
@@ -164,14 +163,3 @@
 
 ---
 
-## Index
-
-- [프로젝트 요구 사항](md/ProjectGuide.md)
-- [Postman](shoppingmall.postman_collection.json)
-- [Learning Point](md/LearningPoint.md)
-- [Trouble Shooting](md/TroubleShooting.md)
-
-## GitHub
-
-- 강사님 GitHub  
-[likelion-backend-8-project2](https://github.com/edujeeho0/likelion-backend-8-project2)
