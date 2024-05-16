@@ -12,7 +12,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/used/{id}/proposal")
+@RequestMapping("/products/{productId}/proposals")
 @RequiredArgsConstructor
 public class ProposalController {
   private final ProposalService service;
@@ -20,7 +20,7 @@ public class ProposalController {
   // Create: buyer가 seller에게 특정 아이템의 구메제안서 생성하기
   @PostMapping("/suggestion")
   public ProposalDto createProposal(
-    @PathVariable("id") Long itemId
+    @PathVariable("productId") Long itemId
   ) {
     return service.createProposal(itemId);
   }
@@ -28,7 +28,7 @@ public class ProposalController {
   // Read - readAll: seller가 특정 아이템의 전체 구매제안서 보기
   @GetMapping("/list")
   public List<ProposalDto> readAll(
-    @PathVariable("id") Long itemId
+    @PathVariable("productId") Long itemId
   ) {
     return service.readAll(itemId);
   }
@@ -36,7 +36,7 @@ public class ProposalController {
   // Read - readOne: buyer가 특정 아이템의 구매제안서 보기
   @GetMapping("/paper")
   public ProposalDto readOne(
-    @PathVariable("id") Long itemId
+    @PathVariable("productId") Long itemId
   ) {
     return service.readOne(itemId);
   }

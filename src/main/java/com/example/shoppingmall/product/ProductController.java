@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @RestController
-@RequestMapping("/used")
+@RequestMapping("/products")
 @RequiredArgsConstructor
 public class ProductController {
   private final ProductService productService;

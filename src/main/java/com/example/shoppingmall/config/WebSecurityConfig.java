@@ -48,25 +48,9 @@ public class WebSecurityConfig {
 
         // 일반 사용자 권한 이상
         .requestMatchers(
-          "/used/enroll",
-          "/used/{usedId}",
-          "/used/modifying/{usedId}",
-          "/used/removing/{id}",
-          "/used/image/{usedId}",
-          "/used/{id}/proposal/suggestion",
-          "/used/{id}/proposal/list",
-          "/used/{id}/proposal/paper",
-          "/used/{id}/proposal/{proposalId}/accepted",
-          "/used/{id}/proposal/{proposalId}/confirmation",
-          "/used/{id}/proposal/{proposalId}/canceled",
-
-          "/used/test/{id}",
-          "/used/test",
-
-          "/shop/{shopId}/modifying",
-          "/shop/list",
-          "/shop/{shopId}/shutdown"
-
+          "/products/**",
+          "/purchases/**",
+          "/shops/**"
         )
         .hasAnyAuthority(
           UserAuthority.COMMON.getAuthority(),
@@ -76,24 +60,13 @@ public class WebSecurityConfig {
 
         // 사업자(owner) 권한
         .requestMatchers(
-          "/goods/enroll",
-          "/goods/modifying/{goodsId}",
-          "/goods/removing/{goodsId}",
-          "/goods/search/{shopId}"
+          "/goods/**"
         )
         .hasAuthority(UserAuthority.BUSINESS.getAuthority())
 
         // 관리자 권한
         .requestMatchers(
-          "/admin/businessPending",
-          "/admin/judgement/{userId}",
-          "/admin/list/application",
-          "/admin/view/application/{shopId}",
-          "/admin/list/shutdown",
-          "/admin/view/shutdown/{shopId}",
-          "/admin/approval/{shopId}",
-          "/admin/list/shutdown",
-          "/admin/accept/shutdown/{shopId}"
+          "/admins/**"
         )
         .hasAuthority(UserAuthority.ADMIN.getAuthority())
 
